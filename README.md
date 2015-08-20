@@ -1,6 +1,6 @@
 ![Screenshot](screenshot-1.png)
 
-## Overview
+## Overview ##
 
 This is the base and basic metadata module for the graphiques-digitale/silverstripe-seo-* module bunch.
 
@@ -16,9 +16,9 @@ It is intended to be used with it's siblings:
 
 These are all optional and fragmented from the alpha version [`SSSEO`](https://github.com/Graphiques-Digitale/SSSEO), which is now redundant.
 
-The whole module bunch is based largely on [18 Meta Tags Every Webpage Should Have in 2013][1]
+The whole module bunch is based largely on [18 Meta Tags Every Webpage Should Have in 2013][1].
 
-Also, a good overview: [5 tips for SEO with Silverstripe 3][2]
+Also, a good overview: [5 tips for SEO with Silverstripe 3][2].
 
 ## Installation ##
 
@@ -29,7 +29,7 @@ Also, a good overview: [5 tips for SEO with Silverstripe 3][2]
 
 ### From ZIP ###
 
-* Place extracted folder `silverstripe-seo-metadata-{version}` into `silverstripe-seo-metadata` in the SilverStripe webroot
+* Place the extracted folder `silverstripe-seo-metadata-{version}` into `silverstripe-seo-metadata` in the SilverStripe webroot
 * run `~/dev/build/?flush`
 
 ## Template Usage ##

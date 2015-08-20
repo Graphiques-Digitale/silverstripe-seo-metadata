@@ -2,7 +2,7 @@
 
 This is the base and basic metadata module for the graphiques-digitale/silverstripe-seo-* modules.
 
-It enables enhanced *title* features, *character set* selection, *canonical URLs* and an enhanced fall-back *description* using `$Content.FirstParagraph`.
+It enables enhanced **_title_** features, **_character set_** selection, **_canonical URLs_** and an enhanced fall-back **_description_** using `$Content.FirstParagraph`.
 
 It is intended to be used with it's siblings:
 * [`Icons`](https://github.com/Graphiques-Digitale/silverstripe-seo-icons)
@@ -25,13 +25,25 @@ These are all optional and fragmented from the alpha version [`SSSEO`](https://g
 
 ### From ZIP ###
 
-* Place extracted folder `silverstripe-seo-metadata` in the SilverStripe webroot.
+* Place extracted folder "" `silverstripe-seo-metadata` in the SilverStripe webroot.
 * run `~/dev/build/?flush`
+
+## Template Usage ##
+
+Depending on your configuration, the general idea is to replace all header content relating to metadata with the following `$Metadata()` just below the opening `<head>` tag and `$BaseHref()` function, e.g.:
+
+```html
+<head$Metahead()>
+<% base_tag %>
+$Metadata()
+<!-- ++ any further includes ~ viewport, etc. -->
+</head>
+```
 
 ## Issue Tracker ##
 
-Issues are tracked on GitHub @ ([issue tracker](https://github.com/Graphiques-Digitale/silverstripe-seo-metadata/issues)
+Issues are tracked on GitHub @ [Issue Tracker](https://github.com/Graphiques-Digitale/silverstripe-seo-metadata/issues)
 
 ## Development and Contribution ##
 
-Please get in touch @ [`hello@graphiquesdigitale.net`](mailto:hello@graphiquesdigitale.net) if you have any extertise in any of these SEO module's areas and would like to help. They're a lots to maintain altogether.
+Please get in touch @ [`hello@graphiquesdigitale.net`](mailto:hello@graphiquesdigitale.net) if you have any extertise in any of these SEO module's areas and would like to help. They're alot to maintain altogether.

@@ -1,0 +1,15 @@
+---
+Name: 'SEO_Metadata'
+#Before: '*'
+---
+SiteConfig:
+  extensions:
+    - 'SEO_Metadata_SiteConfig_DataExtension'
+
+SiteTree:
+  extensions:
+    - 'SEO_Metadata_SiteTree_DataExtension'
+
+LeftAndMain:
+  extensions:
+    - 'SEO_Metadata_LeftAndMain_DataExtension'

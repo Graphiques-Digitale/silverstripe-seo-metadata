@@ -1,0 +1,57 @@
+.CompositeField.ReconMetadataHolder {
+	border-bottom: 1px solid rgba(201, 205, 206, 0.8);
+    box-shadow: 0 1px 0 rgba(244, 245, 245, 0.8);
+	margin: 0 0 8px;
+    padding: 0 0 7px;
+}
+
+	.CompositeField.ReconMetadataHolder .ReconMetadataOutput {
+		/*font-size: 90%;*/
+		font-size: 11px;
+		font-style: italic;
+	}
+
+		.CompositeField.ReconMetadataHolder .field {
+			border-bottom: none;
+			box-shadow: none;
+			margin-bottom: 0;
+			padding-bottom: 0;
+		}
+		.CompositeField.ReconMetadataHolder .ReconMetadataOutput label {
+			/*font-weight: normal;*/
+		}
+
+/**
+ * Reposition upload field
+ * @TODO make this more specific
+ */
+.cms-edit-form .ss-uploadfield .middleColumn {
+	clear: none;
+	width: 510px;
+	margin-left: 184px;
+}
+.cms-edit-form .ss-uploadfield .description {
+	margin-left: 184px;
+}
+
+
+/*** NEW VERSION ***/
+
+.cms-edit-form .field .success,
+.cms-edit-form .ui-tabs-nav .success a {
+	color: green;
+}
+
+.cms-edit-form .field .error,
+.cms-edit-form .ui-tabs-nav .error a {
+	color: red;
+}
+
+.cms-edit-form pre {
+	font: 10px monospace;
+	white-space: pre-wrap;
+}
+.cms-edit-form pre.bold {
+	margin: 2em 0;
+	font-weight: bold !important;
+}

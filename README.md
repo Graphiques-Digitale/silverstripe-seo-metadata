@@ -1,5 +1,7 @@
 ## Overview
 
+![Screenshot](screenshot-1.png)
+
 This is the base and basic metadata module for the graphiques-digitale/silverstripe-seo-* module bunch.
 
 It enables enhanced **_title_** features, **_character set_** selection, **_canonical URLs_** and an enhanced fall-back **_description_** using `$Content.FirstParagraph`.
@@ -17,8 +19,6 @@ These are all optional and fragmented from the alpha version [`SSSEO`](https://g
 The whole module bunch is based largely on [18 Meta Tags Every Webpage Should Have in 2013][1]
 
 Also, a good overview: [5 tips for SEO with Silverstripe 3][2]
-
-![Screenshot](screenshot-1.png)
 
 ## Installation ##
 
@@ -51,7 +51,7 @@ Issues are tracked on GitHub @ [Issue Tracker](https://github.com/Graphiques-Dig
 
 ## Development and Contribution ##
 
-Please get in touch @ [`hello@graphiquesdigitale.net`](mailto:hello@graphiquesdigitale.net) if you have any extertise in any of these SEO module's areas and would like to help. They're alot to maintain altogether.
+Please get in touch @ [`hello@graphiquesdigitale.net`](mailto:hello@graphiquesdigitale.net) if you have any extertise in any of these SEO module's areas and would like to help ~ they're a lot to maintain.
 
 
 

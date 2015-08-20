@@ -1,6 +1,6 @@
-## Overview
-
 ![Screenshot](screenshot-1.png)
+
+## Overview
 
 This is the base and basic metadata module for the graphiques-digitale/silverstripe-seo-* module bunch.
 
@@ -43,6 +43,18 @@ $Metadata()
 <!-- further includes ~ viewport, etc. -->
 <!-- however, really don't include CSS & JS here ~ do it in the *_Controller of this class -->
 </head>
+```
+
+This will output something along the lines of:
+
+```html
+<!-- SEO -->
+<!-- Metadata -->
+<meta charset="UTF-8" />
+<link rel="canonical" href="http://dev.seo.silverstripe.org/" />
+<title>Your Site Name | Home - your tagline here</title>
+<meta name="description" content="Welcome to SilverStripe! This is the default home page. You can edit this page by opening the CMS. You can now access the developer documentation, or begin the tutorials." />
+<!-- END SEO -->
 ```
 
 ## Issue Tracker ##

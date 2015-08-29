@@ -3,7 +3,7 @@
   "description": "Enhanced SEO metadata module for the SilverStripe framework",
   "type": "silverstripe-module",
   "homepage": "https://github.com/Graphiques-Digitale/silverstripe-seo-metadata",
-  "keywords": ["silverstripe", "seo", "metadata", "search engine", "optimisation", "optimization"],
+  "keywords": ["silverstripe", "seo", "metadata", "module", "search engine", "optimisation", "optimization"],
   "license": "BSD-3-Clause",
   "authors": [
     {"name": "Andrew Gerber","email": "atari@graphiquesdigitale.net"}

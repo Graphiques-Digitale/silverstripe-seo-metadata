@@ -1,6 +1,5 @@
 ---
 Name: 'SEO_Metadata'
-#Before: '*'
 ---
 SiteConfig:
   extensions:

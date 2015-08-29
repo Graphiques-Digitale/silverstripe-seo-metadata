@@ -2,7 +2,7 @@
 
 ## Overview ##
 
-This is the base and basic metadata module for the graphiques-digitale/silverstripe-seo-* module bunch.
+This is the base and basic metadata module for the graphiques-digitale/silverstripe-seo-* module collection.
 
 It enables enhanced **_title_** features, **_character set_** selection, **_canonical URLs_** and an enhanced fall-back **_description_** using `$Content.FirstParagraph`.
 
@@ -16,18 +16,18 @@ It is intended to be used with it's siblings:
 
 These are all optional and fragmented from the alpha version [`SSSEO`](https://github.com/Graphiques-Digitale/SSSEO), which is now redundant.
 
-The whole module bunch is based largely on [18 Meta Tags Every Webpage Should Have in 2013][1].
+The whole module collection is based largely on [18 Meta Tags Every Webpage Should Have in 2013][1].
 
 Also, a good overview: [5 tips for SEO with Silverstripe 3][2].
 
 ## Installation ##
 
-### Composer ###
+#### Composer ####
 
 * `composer require graphiques-digitale/silverstripe-seo-metadata`
 * run `~/dev/build/?flush`
 
-### From ZIP ###
+#### From ZIP ####
 
 * Place the extracted folder `silverstripe-seo-metadata-{version}` into `silverstripe-seo-metadata` in the SilverStripe webroot
 * run `~/dev/build/?flush`
@@ -65,6 +65,9 @@ Issues are tracked on GitHub @ [Issue Tracker](https://github.com/Graphiques-Dig
 
 Please get in touch @ [`hello@graphiquesdigitale.net`](mailto:hello@graphiquesdigitale.net) if you have any extertise in any of these SEO module's areas and would like to help ~ they're a lot to maintain.
 
+![Screenshot](screenshot-2.png)
+![Screenshot](screenshot-3.png)
+![Screenshot](screenshot-4.png)
 
 
 [1]: https://www.iacquire.com/blog/18-meta-tags-every-webpage-should-have-in-2013

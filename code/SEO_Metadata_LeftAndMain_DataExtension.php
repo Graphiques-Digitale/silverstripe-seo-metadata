@@ -1,12 +1,10 @@
 <?php
 
 /**
- * SEO_LeftAndMain_DataExtension
+ * Adds some additional CSS to improve usability of the CMS
  *
- * @todo add description
- *
- * @package silverstripe-seo
- * @subpackage metadata
+ * @package SEO
+ * @subpackage Metadata
  * @author Andrew Gerber <atari@graphiquesdigitale.net>
  * @version 1.0.0
  *

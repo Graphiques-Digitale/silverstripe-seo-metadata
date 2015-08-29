@@ -1,9 +1,7 @@
 <?php
 
 /**
- * SEO_Metadata_SiteTree_DataExtension
- *
- * @todo add description
+ * Extends SiteTree with basic metadata fields, as well as the main `Metadata()` method.
  *
  * @package silverstripe-seo
  * @subpackage metadata

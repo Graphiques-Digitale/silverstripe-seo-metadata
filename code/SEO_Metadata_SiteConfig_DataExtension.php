@@ -1,16 +1,12 @@
 <?php
 
 /**
- * SEO_Metadata_SiteConfig_DataExtension
+ * Extends SiteConfig with basic metadata and status switches.
  *
- * @todo add description
- *
- * @package silverstripe-seo
- * @subpackage metadata
+ * @package SEO
+ * @subpackage Metadata
  * @author Andrew Gerber <atari@graphiquesdigitale.net>
  * @version 1.0.0
- *
- * @todo lots
  *
  */
 

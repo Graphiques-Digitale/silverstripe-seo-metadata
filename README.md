@@ -2,17 +2,17 @@
 
 ## Overview ##
 
-This is the base and basic metadata module for the graphiques-digitale/silverstripe-seo-* module collection.
+This is the core metadata module for the graphiques-digitale/silverstripe-seo-* module collection.
 
 It enables enhanced **_title_** features, **_character set_** selection, **_canonical URLs_** and an enhanced fall-back **_description_** using `$Content.FirstParagraph()`.
 
 It is intended to be used with it's siblings:
-* [`Icons`](https://github.com/Graphiques-Digitale/silverstripe-seo-icons)
-* [`Authorship`](https://github.com/Graphiques-Digitale/silverstripe-seo-authorship)
-* [`Facebook Insights`](https://github.com/Graphiques-Digitale/silverstripe-seo-facebook-insights)
-* [`Open Graph`](https://github.com/Graphiques-Digitale/silverstripe-seo-open-graph)
-* [`Twitter Cards`](https://github.com/Graphiques-Digitale/silverstripe-seo-twitter-cards)
-* [`Schema.org`](https://github.com/Graphiques-Digitale/silverstripe-seo-schema-dot-org)
+* [`Graphiques-Digitale/silverstripe-seo-icons`](https://github.com/Graphiques-Digitale/silverstripe-seo-icons)
+* [`Graphiques-Digitale/silverstripe-seo-authorship`](https://github.com/Graphiques-Digitale/silverstripe-seo-authorship)
+* [`Graphiques-Digitale/silverstripe-seo-facebook-insights`](https://github.com/Graphiques-Digitale/silverstripe-seo-facebook-insights)
+* [`Graphiques-Digitale/silverstripe-seo-open-graph`](https://github.com/Graphiques-Digitale/silverstripe-seo-open-graph)
+* [`Graphiques-Digitale/silverstripe-seo-twitter-cards`](https://github.com/Graphiques-Digitale/silverstripe-seo-twitter-cards)
+* [`Graphiques-Digitale/silverstripe-seo-schema-dot-org`](https://github.com/Graphiques-Digitale/silverstripe-seo-schema-dot-org)
 
 These are all optional and fragmented from the alpha version [`SSSEO`](https://github.com/Graphiques-Digitale/SSSEO), which is now redundant.
 
@@ -34,7 +34,7 @@ Also, a good overview: [5 tips for SEO with Silverstripe 3][2].
 
 ## Template Usage ##
 
-Depending on your configuration, the general idea is to replace all header content relating to metadata with `$Metadata()` just below the opening `<head>` tag and `$BaseHref()` function, e.g.:
+Depending on your configuration, the general idea is to replace all header content relating to metadata with `$Metadata()` just below the opening `<head>` tag and `<% base_tag %>` include, e.g.:
 
 ```html
 <head>
@@ -68,7 +68,7 @@ Issues are tracked on GitHub @ [Issue Tracker](https://github.com/Graphiques-Dig
 
 ## Development and Contribution ##
 
-Please get in touch @ [`hello@graphiquesdigitale.net`](mailto:hello@graphiquesdigitale.net) if you have any extertise in any of these SEO module's areas and would like to help ~ they're a lot to maintain, they should have continual improvement and I'm sure they can generally be improved upon by field experts.
+Please get in touch @ [`hello@graphiquesdigitale.net`](mailto:hello@graphiquesdigitale.net) if you have any extertise in any of these SEO module's areas and would like to help ~ they're a lot to maintain, they should be improved continually, as HTML evolves and I'm sure they can generally be improved upon by field experts.
 
 ![Screenshot](screenshot-2.png)
 ![Screenshot](screenshot-3.png)

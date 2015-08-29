@@ -4,7 +4,7 @@
 
 This is the base and basic metadata module for the graphiques-digitale/silverstripe-seo-* module collection.
 
-It enables enhanced **_title_** features, **_character set_** selection, **_canonical URLs_** and an enhanced fall-back **_description_** using `$Content.FirstParagraph`.
+It enables enhanced **_title_** features, **_character set_** selection, **_canonical URLs_** and an enhanced fall-back **_description_** using `$Content.FirstParagraph()`.
 
 It is intended to be used with it's siblings:
 * [`Icons`](https://github.com/Graphiques-Digitale/silverstripe-seo-icons)
@@ -38,16 +38,18 @@ Depending on your configuration, the general idea is to replace all header conte
 
 ```html
 <head>
-<% base_tag %>
-$Metadata()
-<!-- further includes ~ viewport, etc. -->
-<!-- however, really don't include CSS & JS here ~ do it in the *_Controller of this class -->
+	<% base_tag %>
+	$Metadata()
+	<!-- further includes ~ viewport, etc. -->
 </head>
 ```
 
 This will output something along the lines of:
 
 ```html
+<head>
+	<base href="http://dev.seo.silverstripe.org/"><!--[if lte IE 6]></base><![endif]-->
+	
 <!-- SEO -->
 <!-- Metadata -->
 <meta charset="UTF-8" />
@@ -55,6 +57,9 @@ This will output something along the lines of:
 <title>Your Site Name | Home - your tagline here</title>
 <meta name="description" content="Welcome to SilverStripe! This is the default home page. You can edit this page by opening the CMS. You can now access the developer documentation, or begin the tutorials." />
 <!-- END SEO -->
+
+	<!-- further includes ~ viewport, etc. -->
+</head>
 ```
 
 ## Issue Tracker ##
@@ -63,7 +68,7 @@ Issues are tracked on GitHub @ [Issue Tracker](https://github.com/Graphiques-Dig
 
 ## Development and Contribution ##
 
-Please get in touch @ [`hello@graphiquesdigitale.net`](mailto:hello@graphiquesdigitale.net) if you have any extertise in any of these SEO module's areas and would like to help ~ they're a lot to maintain.
+Please get in touch @ [`hello@graphiquesdigitale.net`](mailto:hello@graphiquesdigitale.net) if you have any extertise in any of these SEO module's areas and would like to help ~ they're a lot to maintain, they should have continual improvement and I'm sure they can generally be improved upon by field experts.
 
 ![Screenshot](screenshot-2.png)
 ![Screenshot](screenshot-3.png)

@@ -10,17 +10,17 @@
  *
  */
 
-class SEO_Metadata_LeftAndMain_DataExtension extends DataExtension {
+class SEO_Metadata_LeftAndMain_DataExtension extends DataExtension
+{
 
-	//
-	function init() {
+    //
+    public function init()
+    {
 
-		// get the module root folder name based on the location of this file
-		$moduleRoot = basename(dirname(dirname(__FILE__)));
+        // get the module root folder name based on the location of this file
+        $moduleRoot = basename(dirname(dirname(__FILE__)));
 
-		// include CSS for the CMS
-		Requirements::css("$moduleRoot/css/LeftAndMain.css");
-
-	}
-
+        // include CSS for the CMS
+        Requirements::css("$moduleRoot/css/LeftAndMain.css");
+    }
 }

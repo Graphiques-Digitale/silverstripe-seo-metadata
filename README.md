@@ -40,9 +40,9 @@ Depending on your configuration, the general idea is to replace all header conte
 
 ```html
 <head>
-	<% base_tag %>
-	$Metadata()
-	<!-- further includes ~ viewport, etc. -->
+    <% base_tag %>
+    $Metadata()
+    <!-- further includes ~ viewport, etc. -->
 </head>
 ```
 
@@ -50,17 +50,17 @@ This will output something along the lines of:
 
 ```html
 <head>
-	<base href="http://dev.seo.silverstripe.org/"><!--[if lte IE 6]></base><![endif]-->
-	
-<!-- SEO -->
-<!-- Metadata -->
-<meta charset="UTF-8" />
-<link rel="canonical" href="http://dev.seo.silverstripe.org/" />
-<title>Your Site Name | Home - your tagline here</title>
-<meta name="description" content="Welcome to SilverStripe! This is the default home page. You can edit this page by opening the CMS. You can now access the developer documentation, or begin the tutorials." />
-<!-- END SEO -->
+    <base href="http://dev.seo.silverstripe.org/"><!--[if lte IE 6]></base><![endif]-->
 
-	<!-- further includes ~ viewport, etc. -->
+    <!-- SEO -->
+    <!-- Metadata -->
+    <meta charset="UTF-8" />
+    <link rel="canonical" href="http://dev.seo.silverstripe.org/" />
+    <title>Your Site Name | Home - your tagline here</title>
+    <meta name="description" content="Welcome to SilverStripe! This is the default home page. You can edit this page by opening the CMS. You can now access the developer documentation, or begin the tutorials." />
+    <!-- END SEO -->
+
+    <!-- further includes ~ viewport, etc. -->
 </head>
 ```
 
@@ -72,8 +72,14 @@ Issues are tracked on GitHub @ [Issue Tracker](https://github.com/Graphiques-Dig
 
 Please get in touch @ [`hello@graphiquesdigitale.net`](mailto:hello@graphiquesdigitale.net) if you have any extertise in any of these SEO module's areas and would like to help ~ they're a lot to maintain, they should be improved continually as HTML evolves and I'm sure they can generally be improved upon by field experts.
 
+## License ##
+
+MIT License
+
 ![Screenshot](screenshot-2.png)
+
 ![Screenshot](screenshot-3.png)
+
 ![Screenshot](screenshot-4.png)
 
 

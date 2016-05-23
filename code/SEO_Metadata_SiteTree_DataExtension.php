@@ -8,8 +8,6 @@
  * @author Andrew Gerber <atari@graphiquesdigitale.net>
  * @version 1.0.0
  *
- * @todo lots
- *
  */
 
 class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
@@ -19,7 +17,6 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	------------------------------------------------------------------------------*/
 
 	private static $db = array(
-		//
 		'MetaTitle' => 'Varchar(128)',
 		'MetaDescription' => 'Text', // redundant, but included for backwards-compatibility
 		'ExtraMeta' => 'HTMLText', // redundant, but included for backwards-compatibility
@@ -36,16 +33,16 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 		$config = SiteConfig::current_site_config();
 		$owner = $this->owner;
 
-		// SEO Tabset
-// 		$fields->addFieldToTab('Root', new TabSet('SEO'));
-
-		// remove
+		// remove framework default fields
 		$fields->removeByName(array('Metadata'));
 
 		//// Full Output
 
 		$tab = 'Root.SEO.FullOutput';
 
+		/**
+		 * @todo Schema.org integration
+		 */
 // 		if ($owner->hasExtension('SEO_SchemaDotOrg_SiteTree_DataExtension')) {
 // 			if ($head = $owner->Metahead()) {
 // 				$fields->addFieldsToTab($tab, array(
@@ -54,6 +51,8 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 // 				));
 // 			}
 // 		}
+
+		// monospaced, HTML SEO output
 		$fields->addFieldsToTab($tab, array(
 			LiteralField::create('HeaderMetadata', '<pre class="bold">$Metadata()</pre>'),
 			LiteralField::create('LiteralMetadata', '<pre>' . nl2br(htmlentities(trim($owner->Metadata()), ENT_QUOTES)) . '</pre>')
@@ -98,7 +97,7 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	------------------------------------------------------------------------------*/
 
 	/**
-	 * @name Metahead
+	 * @todo Schema.org integration
 	 */
 // 	public function Metahead() {
 
@@ -116,7 +115,11 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 // 	}
 
 	/**
-	 * @name Metadata
+	 * Main function to format & output metadata as an HTML string.
+	 *
+	 * Use the `updateMetadata($config, $owner, $metadata)` update hook when extending `DataExtension`s.
+	 *
+	 * @return string
 	 */
 	public function Metadata() {
 
@@ -125,20 +128,20 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 		$owner = $this->owner;
 		$metadata = PHP_EOL . $owner->MarkupHeader('SEO');
 
-		//// Basic
+		//// basic
 		$metadata .= $owner->MarkupHeader('Metadata');
 
-		// Charset
+		// charset
 		if ($config->CharsetEnabled()) {
 			$metadata .= '<meta charset="' . $config->Charset . '" />' . PHP_EOL;
 		}
 
-		// Canonical
+		// canonical
 		if ($config->CanonicalEnabled()) {
 			$metadata .= $owner->MarkupRel('canonical', $owner->AbsoluteLink());
 		}
 
-		// Title
+		// title
 		if ($config->TitleEnabled()) {
 
 			// ternary operation
@@ -148,7 +151,7 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 
 		}
 
-		// Description
+		// description
 		$metadata .= $owner->Markup('description', $owner->GenerateDescription(), true, $config->Charset);
 
 		//// ExtraMeta
@@ -160,9 +163,8 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 			}
 		}
 
-		////
-
-		$owner->extend('updateMetadata', $metadata, $owner, $config);
+		//// extension update hook
+		$owner->extend('updateMetadata', $config, $owner, $metadata);
 
 		// end
 		$metadata .= $owner->MarkupHeader('END SEO');
@@ -177,7 +179,57 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	------------------------------------------------------------------------------*/
 
 	/**
-	 * @name Markup (basic)
+	 * Returns a given string as a HTML comment.
+	 *
+	 * @var string $comment
+	 *
+	 * @return string
+	 */
+	public function MarkupComment($comment) {
+		// return
+		return '<!-- ' . $comment . ' -->' . PHP_EOL;
+	}
+
+	/**
+	 * Returns a given string as a HTML comment.
+	 *
+	 * @return string
+	 *
+	 * @deprecated 1.0.0
+	 */
+	public function MarkupHeader($title) {
+		// return
+		return '<!-- ' . $title . ' -->' . PHP_EOL;
+	}
+
+	/**
+	 * Returns markup for a HTML meta element.
+	 *
+	 * @var string $name
+	 * @var string $content
+	 * @var bool $encode
+	 * @var string $charset
+	 *
+	 * @return string
+	 */
+	public function MarkupMeta($name, $content, $encode = false, $charset = 'UTF-8') {
+		// encode content
+		if ($encode) $content = htmlentities($content, ENT_QUOTES, $charset);
+		// return
+		return '<meta name="' . $name . '" content="' . $content . '" />' . PHP_EOL;
+	}
+
+	/**
+	 * Returns markup for a HTML meta element.
+	 *
+	 * @var string $name
+	 * @var string $content
+	 * @var string $encode
+	 * @var string $charset
+	 *
+	 * @return string
+	 *
+	 * @deprecated 1.0.0
 	 */
 	public function Markup($name, $content, $encode, $charset = 'UTF-8') {
 		// encode content
@@ -187,26 +239,70 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	}
 
 	/**
-	 * @name Markup Header
+	 * Returns markup for a HTML link element.
+	 *
+	 * @param string $rel
+	 * @param string $href
+	 * @param string $type
+	 * @param string $sizes
+	 *
+	 * @return string
 	 */
-	public function MarkupHeader($title) {
-		// return
-		return '<!-- ' . $title . ' -->' . PHP_EOL;
-	}
-
-	/**
-	 * @name Markup Rel
-	 */
-	public function MarkupRel($rel, $href, $type = null) {
+	public function MarkupLink($rel, $href, $type = '', $sizes = '') {
+		// start fragment
+		$return = '<link rel="' . $rel . '" href="' . $href . '"';
+		// if type
 		if ($type) {
-			return '<link rel="' . $rel . '" href="' . $href . '" type="' . $type . '" />' . PHP_EOL;
-		} else {
-			return '<link rel="' . $rel . '" href="' . $href . '" />' . PHP_EOL;
+			$return .= ' type="' . $type . '"';
 		}
+		// if sizes
+		if ($sizes) {
+			$return .= ' sizes="' . $sizes . '"';
+		}
+		// end fragment
+		$return .= ' />' . PHP_EOL;
+		// return
+		return $return;
 	}
 
 	/**
-	 * @name Markup Facebook
+	 * Returns markup for a HTML link element.
+	 *
+	 * @var string $rel
+	 * @var string $href
+	 * @var string $type
+	 * @var string $sizes
+	 *
+	 * @return string
+	 *
+	 * @deprecated 1.0.0
+	 */
+	public function MarkupRel($rel, $href, $type = null, $sizes = null) {
+		// start fragment
+		$return = '<link rel="' . $rel . '" href="' . $href . '"';
+		// if type
+		if ($type) {
+			$return .= ' type="' . $type . '"';
+		}
+		// if sizes
+		if ($sizes) {
+			$return .= ' sizes="' . $sizes . '"';
+		}
+		// end fragment
+		$return .= ' />' . PHP_EOL;
+		// return
+		return $return;
+	}
+
+	/**
+	 * Returns markup for an Open Graph meta element.
+	 *
+	 * @var $property
+	 * @var $content
+	 * @var $encode
+	 * @var $charset
+	 *
+	 * @return string
 	 */
 	public function MarkupFacebook($property, $content, $encode, $charset = 'UTF-8') {
 		// encode content
@@ -216,7 +312,14 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	}
 
 	/**
-	 * @name Markup Twitter
+	 * Returns markup for a Twitter Cards meta element.
+	 *
+	 * @var $name
+	 * @var $content
+	 * @var $encode
+	 * @var $charset
+	 *
+	 * @return string
 	 */
 	public function MarkupTwitter($name, $content, $encode, $charset = 'UTF-8') {
 		// encode content
@@ -226,7 +329,14 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	}
 
 	/**
-	 * @name Markup Schema
+	 * Returns markup for a Schema.org meta element.
+	 *
+	 * @var $itemprop
+	 * @var $content
+	 * @var $encode
+	 * @var $charset
+	 *
+	 * @return string
 	 */
 	public function MarkupSchema($itemprop, $content, $encode, $charset = 'UTF-8') {
 		// encode content
@@ -240,7 +350,9 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	------------------------------------------------------------------------------*/
 
 	/**
-	 * @name MetaTitle
+	 * Generates HTML title based on configuration settings.
+	 *
+	 * @return string
 	 */
 	public function GenerateTitle() {
 
@@ -283,8 +395,9 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	}
 
 	/**
-	 * @name GenerateDescription
-	 * default limit: 155 characters
+	 * Returns description from the page `MetaDescription`, or the first paragraph of the `Content` attribute.
+	 *
+	 * @return bool|string
 	 */
 	public function GenerateDescription() {
 
@@ -298,8 +411,9 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	}
 
 	/**
-	 * @name GenerateDescription
-	 * default limit: 155 characters
+	 * Generates description from the first paragraph of the `Content` attribute.
+	 *
+	 * @return bool|string
 	 */
 	public function GenerateDescriptionFromContent() {
 
@@ -315,7 +429,6 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 		} else {
 			return false;
 		}
-
 
 	}
 

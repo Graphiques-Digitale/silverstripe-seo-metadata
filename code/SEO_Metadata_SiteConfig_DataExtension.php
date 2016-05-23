@@ -76,7 +76,7 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension {
 		if ($this->TitleEnabled()) {
 
 			// remove
-			// @todo move them, don't recreate them
+			// @todo move existing fields, don't recreate them
 // 			$fields->removeByName(array('Title', 'Tagline'));
 
 			$tab = 'Root.SEO.Title';

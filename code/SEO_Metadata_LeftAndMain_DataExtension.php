@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Adds some additional CSS to improve usability of the CMS
+ * Adds some additional CSS to improve usability of the CMS.
  *
  * @package SEO
  * @subpackage Metadata
@@ -12,7 +12,9 @@
 
 class SEO_Metadata_LeftAndMain_DataExtension extends DataExtension {
 
-	//
+	/**
+	 * Override init function.
+	 */
 	function init() {
 
 		// get the module root folder name based on the location of this file

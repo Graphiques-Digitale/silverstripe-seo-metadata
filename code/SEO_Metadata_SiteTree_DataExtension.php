@@ -190,18 +190,6 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	}
 
 	/**
-	 * Returns a given string as a HTML comment.
-	 *
-	 * @return string
-	 *
-	 * @deprecated 1.0.0
-	 */
-	public function MarkupHeader($title) {
-		// return
-		return '<!-- ' . $title . ' -->' . PHP_EOL;
-	}
-
-	/**
 	 * Returns markup for a HTML meta element.
 	 *
 	 * @var string $name
@@ -219,25 +207,6 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	}
 
 	/**
-	 * Returns markup for a HTML meta element.
-	 *
-	 * @var string $name
-	 * @var string $content
-	 * @var string $encode
-	 * @var string $charset
-	 *
-	 * @return string
-	 *
-	 * @deprecated 1.0.0
-	 */
-	public function Markup($name, $content, $encode, $charset = 'UTF-8') {
-		// encode content
-		if ($encode) $content = htmlentities($content, ENT_QUOTES, $charset);
-		// return
-		return '<meta name="' . $name . '" content="' . $content . '" />' . PHP_EOL;
-	}
-
-	/**
 	 * Returns markup for a HTML link element.
 	 *
 	 * @param string $rel
@@ -248,35 +217,6 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	 * @return string
 	 */
 	public function MarkupLink($rel, $href, $type = '', $sizes = '') {
-		// start fragment
-		$return = '<link rel="' . $rel . '" href="' . $href . '"';
-		// if type
-		if ($type) {
-			$return .= ' type="' . $type . '"';
-		}
-		// if sizes
-		if ($sizes) {
-			$return .= ' sizes="' . $sizes . '"';
-		}
-		// end fragment
-		$return .= ' />' . PHP_EOL;
-		// return
-		return $return;
-	}
-
-	/**
-	 * Returns markup for a HTML link element.
-	 *
-	 * @var string $rel
-	 * @var string $href
-	 * @var string $type
-	 * @var string $sizes
-	 *
-	 * @return string
-	 *
-	 * @deprecated 1.0.0
-	 */
-	public function MarkupRel($rel, $href, $type = null, $sizes = null) {
 		// start fragment
 		$return = '<link rel="' . $rel . '" href="' . $href . '"';
 		// if type

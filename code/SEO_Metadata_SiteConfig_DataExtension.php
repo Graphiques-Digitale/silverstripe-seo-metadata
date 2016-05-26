@@ -54,8 +54,12 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension {
 		$fields->addFieldToTab('Root', new TabSet('SEO'));
 
 		//// Configuration
-
 		$tab = 'Root.SEO.Configuration';
+
+		// header
+		$fields->addFieldToTab($tab, HeaderField::create('MetadataHeader', 'Metadata'));
+
+		// fields
 		$fields->addFieldsToTab($tab, array(
 			// Charset
 			DropdownField::create('CharsetStatus', 'Character Set', $owner->dbObject('CharsetStatus')->enumValues())

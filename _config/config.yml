@@ -10,5 +10,5 @@ SiteTree:
     - 'SEO_Metadata_SiteTree_DataExtension'
 
 LeftAndMain:
-  extensions:
-    - 'SEO_Metadata_LeftAndMain_DataExtension'
+  extra_requirements_css:
+    - 'silverstripe-seo-metadata/css/LeftAndMain.css'

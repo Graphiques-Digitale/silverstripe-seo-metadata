@@ -10,23 +10,19 @@
 
 /* special header & description label styles */
 
-#Root_SEO_set h2,
-#Root_SEO_set h3,
-#Root_SEO_set h4,
-#Root_SEO_set h5,
-#Root_SEO_set h6 {
+#Root h2,
+#Root h3,
+#Root h4,
+#Root h5,
+#Root h6 {
 	margin-bottom: 8px;
 }
-#Root_SEO_set h2 span.aka,
-#Root_SEO_set h3 span.aka,
-#Root_SEO_set h4 span.aka,
-#Root_SEO_set h5 span.aka,
-#Root_SEO_set h6 span.aka {
+#Root span.aka {
 	font-size: 1rem;
 	font-style: italic;
 }
-#Root_SEO_set .information p,
-#Root_SEO_set label.information {
+#Root .information p,
+#Root label.information {
 	display: block;
 	padding: 8px;
 	border: 1px solid #d2d5d8;
@@ -36,30 +32,30 @@
 
 /* success & failure styles */
 
-#Root_SEO_set .field .success,
-#Root_SEO_set .ui-tabs-nav .success a {
+#Root .field span.success,
+#Root .ui-tabs-nav .success a {
 	color: green;
 }
 
-#Root_SEO_set .field .error,
-#Root_SEO_set .ui-tabs-nav .error a {
+#Root .field span.error,
+#Root .ui-tabs-nav .error a {
 	color: red;
 }
 
-/* special favicon style */
+/* special SiteConfig favicon style */
 
-#Root_SEO_set .field .success.favicon {
+#Root #Metadata .field .success.favicon {
 	padding-bottom: 24px;
 	background: transparent url('/favicon.ico') no-repeat left bottom;
 }
 
-/* pre-formatted styles */
+/* special pre-formatted style */
 
-#Root_SEO_set pre {
-	font: 10px monospace;
+#Root pre {
+	font: 10px/12px monospace;
 	white-space: pre-wrap;
 }
-#Root_SEO_set pre.bold {
+#Root pre.bold {
 	margin: 2em 0;
 	font-weight: bold !important;
 }
@@ -67,13 +63,13 @@
 /* reposition upload field + description */
 /* @todo (maybe?) increase specificity */
 
-/*#Root_SEO_set*/
+/*#Root_Metadata_set*/
 .cms-edit-form .ss-uploadfield .middleColumn {
 	clear: none;
 	width: 510px;
 	margin-left: 184px;
 }
-/*#Root_SEO_set*/
+/*#Root_Metadata_set*/
 .cms-edit-form .ss-uploadfield .description {
 	margin-left: 184px;
 }

@@ -24,7 +24,7 @@
     "issues": "https://github.com/Graphiques-Digitale/silverstripe-seo-metadata/issues"
   },
   "require": {
-    "silverstripe/cms": "3.*"
+    "silverstripe/cms": "~3"
   },
   "extra": {
     "installer-name": "silverstripe-seo-metadata",

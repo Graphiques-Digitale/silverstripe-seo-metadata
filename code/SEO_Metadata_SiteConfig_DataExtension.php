@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Extends SiteConfig with basic metadata and status switches.
+ * Adds enhanced HTML SEO metadata.
  *
  * @package SEO
  * @subpackage Metadata
@@ -13,31 +13,65 @@
 class SEO_Metadata_SiteConfig_DataExtension extends DataExtension {
 
 
+	/* Static Variables
+	------------------------------------------------------------------------------*/
+
+	//
+	private static $CharsetStatus = false;
+	private static $Charset = false;
+	private static $CanonicalStatus = false;
+	private static $TitleStatus = false;
+	private static $ExtraMetaStatus = false;
+
+	//
+	private static $TitleSeparatorDefault = '|';
+	private static $TaglineSeparatorDefault = '-';
+
+	//
+	private static $SEOMetadataUpload = 'SEO/Metadata/';
+
+
+	/* Status Methods
+	------------------------------------------------------------------------------*/
+
+	//
+	public function CharsetEnabled() {
+		return ($this->owner->config()->CharsetStatus === true) ? true : false;
+	}
+
+	//
+	public function CanonicalEnabled() {
+		return ($this->owner->config()->CanonicalStatus === true) ? true : false;
+	}
+
+	//
+	public function TitleEnabled() {
+		return ($this->owner->config()->TitleStatus === true) ? true : false;
+	}
+
+	//
+	public function ExtraMetaEnabled() {
+		return ($this->owner->config()->ExtraMetaStatus === true) ? true : false;
+	}
+
+
+	/* Config Methods
+	------------------------------------------------------------------------------*/
+
+	public function Charset() {
+		return $this->owner->config()->Charset;
+	}
+
+
 	/* Overload Model
 	------------------------------------------------------------------------------*/
 
 	private static $db = array(
-
-		//// Metadata Configuration
-		// Charset
-		'CharsetStatus' => 'Enum(array("off", "UTF-8", "ISO-8859-1"), "UTF-8")', // default: UTF-8
-		// Canonical
-		'CanonicalStatus' => 'Enum(array("off", "on"), "on")', // default: on
-		// Title
-		'TitleStatus' => 'Enum(array("off", "on"), "on")', // default: on
-		// ExtraMeta
-		'ExtraMetaStatus' => 'Enum(array("off", "on"), "off")', // default: off
-
-		//// Metadata Values
-		// Charset
-		'Charset' => 'Enum(array("UTF-8"), "UTF-8")',
-		// Title
+		'TitleOrder' => 'Enum(array("first", "last"), "first")',
 		'Title' => 'Text', // redundant, but included for backwards-compatibility
 		'TitleSeparator' => 'Varchar(1)',
 		'Tagline' => 'Text', // redundant, but included for backwards-compatibility
 		'TaglineSeparator' => 'Varchar(1)',
-		'TitlePosition' => 'Enum(array("first", "last"), "first")',
-
 	);
 
 
@@ -47,120 +81,130 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension {
 	// CMS Fields
 	public function updateCMSFields(FieldList $fields) {
 
-		// owner
+		// Variables
 		$owner = $this->owner;
 
-		// SEO Tabset
-		$fields->addFieldToTab('Root', new TabSet('SEO'));
-
-		//// Configuration
-		$tab = 'Root.SEO.Configuration';
-
-		// header
-		$fields->addFieldToTab($tab, HeaderField::create('MetadataHeader', 'Metadata'));
-
-		// fields
-		$fields->addFieldsToTab($tab, array(
-			// Charset
-			DropdownField::create('CharsetStatus', 'Character Set', $owner->dbObject('CharsetStatus')->enumValues())
-				->setDescription('output: meta charset'),
-			// Canonical
-			DropdownField::create('CanonicalStatus', 'Canonical Pages', $owner->dbObject('CanonicalStatus')->enumValues())
-				->setDescription('output: link rel="canonical"'),
-			// Title
-			DropdownField::create('TitleStatus', 'Title', $owner->dbObject('TitleStatus')->enumValues())
-				->setDescription('output: meta title'),
-			// ExtraMeta
-			DropdownField::create('ExtraMetaStatus', 'Custom Metadata', $owner->dbObject('ExtraMetaStatus')->enumValues())
-				->setDescription('allow custom metadata on pages<br />please ensure metadata content is entity encoded!') // @todo entity encode content="%s"
-		));
+		// Tab Set
+		$fields->addFieldToTab('Root', new TabSet('Metadata'), 'Access');
 
 		//// Title
 
 		if ($this->TitleEnabled()) {
 
-			// remove
-			// @todo move existing fields, don't recreate them
-// 			$fields->removeByName(array('Title', 'Tagline'));
+			// Tab
+			$tab = 'Root.Metadata.Title';
 
-			$tab = 'Root.SEO.Title';
+			// Title Order Options
+			$titleOrderOptions = array(
+				'first' => 'Page Title | Website Name - Tagline',
+				'last' => 'Website Name - Tagline | Page Title'
+			);
 
-			// add
+			// Fields
 			$fields->addFieldsToTab($tab, array(
-				// Title
-				TextField::create('Title', 'Title'),
-				// TitleSeparator
-				TextField::create('TitleSeparator', 'Title Separator')
-					->setAttribute('placeholder', $this->titleSeparatorDefault())
+				// Information
+				LabelField::create('FaviconDescription', 'A title tag is the main text that describes an online document. Title elements have long been considered one of the most important on-page SEO elements (the most important being overall content), and appear in three key places: browsers, search engine results pages, and external websites.<br />@ <a href="https://moz.com/learn/seo/title-tag" target="_blank">Title Tag - Learn SEO - Mozilla</a>')
+					->addExtraClass('information'),
+				// Title Order
+				DropdownField::create('TitleOrder', 'Page Title Order', $titleOrderOptions),
+				// Title Separator
+				TextField::create('TitleSeparator', 'Page Title Separator')
+					->setAttribute('placeholder', self::$TitleSeparatorDefault)
 					->setAttribute('size', 1)
 					->setMaxLength(1)
-					->setDescription('character limit: 1'),
+					->setDescription('max 1 character'),
+				// Title
+				TextField::create('Title', 'Website Name'),
+				// Tagline Separator
+				TextField::create('TaglineSeparator', 'Tagline Separator')
+					->setAttribute('placeholder', self::$TaglineSeparatorDefault)
+					->setAttribute('size', 1)
+					->setMaxLength(1)
+					->setDescription('max 1 character'),
 				// Tagline
 				TextField::create('Tagline', 'Tagline')
-					->setDescription('optional'),
-				// TaglineSeparator
-				TextField::create('TaglineSeparator', 'Tagline Separator')
-					->setAttribute('placeholder', $this->taglineSeparatorDefault())
-					->setAttribute('size', 1)
-					->setMaxLength(1)
-					->setDescription('character limit: 1'),
-				// TitlePosition
-				DropdownField::create('TitlePosition', 'Title Position', $owner->dbObject('TitlePosition')->enumValues())
-					->setDescription('first: <u>Title</u> | Page - Tagline' . '<br />' . 'last: Page - Tagline | <u>Title</u>')
+					->setDescription('optional')
 			));
 		}
 
 	}
 
 
-	/* Static Variables
+	/* Custom Methods
 	------------------------------------------------------------------------------*/
 
-	private static $TitleSeparatorDefault = '|';
-	private static $TaglineSeparatorDefault = '-';
-	private static $FaviconBGDefault = 'FFFFFF';
+	/**
+	 * Fetches the title separator, falls back to default
+	 *
+	 * @return string
+	 */
+	public function FetchTitleSeparator() {
 
+		return ($this->owner->TitleSeparator) ? $this->owner->TitleSeparator : self::$TitleSeparatorDefault;
 
-	/* Static Accessors
-	------------------------------------------------------------------------------*/
-
-	//
-	public function titleSeparatorDefault() {
-		return self::$TitleSeparatorDefault;
 	}
 
-	//
-	public function taglineSeparatorDefault() {
-		return self::$TaglineSeparatorDefault;
+	/**
+	 * Fetches the tagline separator, falls back to default
+	 *
+	 * @return string
+	 */
+	public function FetchTaglineSeparator() {
+
+		return ($this->owner->TaglineSeparator) ? $this->owner->TaglineSeparator : self::$TaglineSeparatorDefault;
+
 	}
 
-	//
-	public function faviconBGDefault() {
-		return self::$FaviconBGDefault;
-	}
+	/**
+	 * Generates HTML title based on configuration settings.
+	 *
+	 * @return string
+	 */
+	public function GenerateTitle($pageTitle = 'Title Error') {
 
+		// variables
+		$owner = $this->owner;
 
-	/* Accessor Methods
-	------------------------------------------------------------------------------*/
+		if ($owner->Title) {
 
-	//
-	public function CharsetEnabled() {
-		return ($this->owner->CharsetStatus == 'off') ? false : true;
-	}
+			// title parts, begin with name/title
+			$titles = array($owner->Title);
 
-	//
-	public function CanonicalEnabled() {
-		return ($this->owner->CanonicalStatus == 'off') ? false : true;
-	}
+			// tagline
+			if ($owner->Tagline) {
+				array_push($titles, $owner->FetchTaglineSeparator());
+				array_push($titles, $owner->Tagline);
+			}
 
-	//
-	public function TitleEnabled() {
-		return ($this->owner->TitleStatus == 'off') ? false : true;
-	}
+			// page title
+			if ($owner->TitleOrder == 'first') {
+				// add to the beginning
+				array_unshift($titles, $owner->FetchTitleSeparator());
+				array_unshift($titles, $pageTitle);
+			} else {
+				// add to the end
+				array_push($titles, $owner->FetchTitleSeparator());
+				array_push($titles, $pageTitle);
 
-	//
-	public function ExtraMetaEnabled() {
-		return ($this->owner->ExtraMetaStatus == 'off') ? false : true;
+			}
+
+			// implode to create title
+			$title = implode(' ', $titles);
+
+			// @todo remove whitespace before certain characters e.g. `,` `.` `;` `:`
+			//
+			$title = preg_replace('/\s*[,.:]/', '', $title);
+
+			// return
+			return $title;
+
+		} else {
+
+			// just return the page title if there is no name
+			return $pageTitle;
+
+		}
+
 	}
 
 }

@@ -13,7 +13,7 @@
 class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 
 
-	/* Overload Variable
+	/* Overload Model
 	------------------------------------------------------------------------------*/
 
 	private static $db = array(
@@ -21,6 +21,19 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 		'MetaDescription' => 'Text', // redundant, but included for backwards-compatibility
 		'ExtraMeta' => 'HTMLText', // redundant, but included for backwards-compatibility
 	);
+
+	//// testing
+	protected $MetaConfig;
+	protected $MetaCharset;
+
+	public function __construct()
+	{
+		//
+		parent::__construct();
+		//
+		$this->MetaConfig = SiteConfig::current_site_config();
+		$this->MetaCharset = $this->MetaConfig->Charset;
+	}
 
 
 	/* Overload Methods
@@ -36,30 +49,8 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 		// remove framework default fields
 		$fields->removeByName(array('Metadata'));
 
-		//// Full Output
-
-		$tab = 'Root.SEO.FullOutput';
-
-		/**
-		 * @todo Schema.org integration
-		 */
-// 		if ($owner->hasExtension('SEO_SchemaDotOrg_SiteTree_DataExtension')) {
-// 			if ($head = $owner->Metahead()) {
-// 				$fields->addFieldsToTab($tab, array(
-// 					LiteralField::create('HeaderMetahead', '<pre class="bold">$Metahead()</pre>'),
-// 					LiteralField::create('LiteralMetahead', '<pre><span style="background-color: white;">' . htmlentities($head) . '</span></pre>')
-// 				));
-// 			}
-// 		}
-
-		// monospaced, HTML SEO output
-		$fields->addFieldsToTab($tab, array(
-			LiteralField::create('HeaderMetadata', '<pre class="bold">$Metadata()</pre>'),
-			LiteralField::create('LiteralMetadata', '<pre>' . nl2br(htmlentities(trim($owner->Metadata()), ENT_QUOTES)) . '</pre>')
-		));
-
 		//// Metadata
-		$tab = 'Root.SEO.Metadata';
+		$tab = 'Root.Metadata.SEO';
 
 		// Canonical
 		if ($config->CanonicalEnabled()) {
@@ -89,29 +80,17 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 			));
 		}
 
+		//// Full Output
+
+		$tab = 'Root.Metadata.FullOutput';
+
+		// monospaced, HTML SEO output
+		$fields->addFieldsToTab($tab, array(
+			LiteralField::create('HeaderMetadata', '<pre class="bold">$Metadata()</pre>'),
+			LiteralField::create('LiteralMetadata', '<pre>' . nl2br(htmlentities(trim($owner->Metadata()), ENT_QUOTES)) . '</pre>')
+		));
+
 	}
-
-
-	/* Template Methods
-	------------------------------------------------------------------------------*/
-
-	/**
-	 * @todo Schema.org integration
-	 */
-// 	public function Metahead() {
-
-// 		$owner = $this->owner;
-// 		$metadata = '';
-
-// 		//// Schema.org
-
-// 		if ($owner->hasExtension('SEO_SchemaDotOrg_SiteTree_DataExtension')) {
-// 			$metadata .= $owner->SchemaDotOrgItemscope();
-// 		}
-
-// 		return $metadata;
-
-// 	}
 
 	/**
 	 * Main function to format & output metadata as an HTML string.
@@ -125,14 +104,16 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 		// variables
 		$config = SiteConfig::current_site_config();
 		$owner = $this->owner;
+
+		// begin SEO
 		$metadata = PHP_EOL . $owner->MarkupComment('SEO');
 
-		//// basic
+		// metadata
 		$metadata .= $owner->MarkupComment('Metadata');
 
 		// charset
 		if ($config->CharsetEnabled()) {
-			$metadata .= '<meta charset="' . $config->Charset . '" />' . PHP_EOL;
+			$metadata .= '<meta charset="' . $config->Charset() . '" />' . PHP_EOL;
 		}
 
 		// canonical
@@ -144,14 +125,15 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 		if ($config->TitleEnabled()) {
 
 			// ternary operation
+			// @todo Check what is going here ?!
 			$title = ($owner->MetaTitle) ? $owner->MetaTitle : $owner->GenerateTitle();
 			//
-			$metadata .= '<title>' . htmlentities($title, ENT_QUOTES, $config->Charset) . '</title>' . PHP_EOL;
+			$metadata .= '<title>' . htmlentities($title, ENT_QUOTES, $config->Charset()) . '</title>' . PHP_EOL;
 
 		}
 
 		// description
-		$metadata .= $owner->MarkupMeta('description', $owner->GenerateDescription(), true, $config->Charset);
+		$metadata .= $owner->MarkupMeta('description', $owner->GenerateDescription(), true, $config->Charset());
 
 		//// ExtraMeta
 
@@ -195,13 +177,12 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	 * @var string $name
 	 * @var string $content
 	 * @var bool $encode
-	 * @var string $charset
 	 *
 	 * @return string
 	 */
-	public function MarkupMeta($name, $content, $encode = false, $charset = 'UTF-8') {
+	public function MarkupMeta($name, $content, $encode = false) {
 		// encode content
-		if ($encode) $content = htmlentities($content, ENT_QUOTES, $charset);
+		if ($encode) $content = htmlentities($content, ENT_QUOTES, $this->owner->Charset);
 		// return
 		return '<meta name="' . $name . '" content="' . $content . '" />' . PHP_EOL;
 	}
@@ -239,14 +220,13 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	 * @var $property
 	 * @var $content
 	 * @var $encode
-	 * @var $charset
 	 *
 	 * @return string
 	 */
-	public function MarkupFacebook($property, $content, $encode, $charset = 'UTF-8') {
+	public function MarkupFacebook($property, $content, $encode = true) {
 		// encode content
-		if ($encode) $content = htmlentities($content, ENT_QUOTES, $charset);
-		//
+		if ($encode) $content = htmlentities($content, ENT_QUOTES, $this->owner->Charset);
+		// format & return
 		return '<meta property="' . $property . '" content="' . $content . '" />' . PHP_EOL;
 	}
 
@@ -256,14 +236,13 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	 * @var $name
 	 * @var $content
 	 * @var $encode
-	 * @var $charset
 	 *
 	 * @return string
 	 */
-	public function MarkupTwitter($name, $content, $encode, $charset = 'UTF-8') {
+	public function MarkupTwitter($name, $content, $encode = true) {
 		// encode content
-		if ($encode) $content = htmlentities($content, ENT_QUOTES, $charset);
-		// return
+		if ($encode) $content = htmlentities($content, ENT_QUOTES, $this->owner->Charset);
+		// format & return
 		return '<meta name="' . $name . '" content="' . $content . '" />' . PHP_EOL;
 	}
 
@@ -273,14 +252,13 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	 * @var $itemprop
 	 * @var $content
 	 * @var $encode
-	 * @var $charset
 	 *
 	 * @return string
 	 */
-	public function MarkupSchema($itemprop, $content, $encode, $charset = 'UTF-8') {
+	public function MarkupSchema($itemprop, $content, $encode = true) {
 		// encode content
-		if ($encode) $content = htmlentities($content, ENT_QUOTES, $charset);
-		// return
+		if ($encode) $content = htmlentities($content, ENT_QUOTES, $this->owner->Charset);
+		// format & return
 		return '<meta itemprop="' . $itemprop . '" content="' . $content . '" />' . PHP_EOL;
 	}
 
@@ -291,45 +269,12 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	/**
 	 * Generates HTML title based on configuration settings.
 	 *
-	 * @return string
+	 * @return bool|string
 	 */
 	public function GenerateTitle() {
 
-		$owner = $this->owner;
-
-		// variables
-		$config = SiteConfig::current_site_config();
-
-		// collect title parts
-		$titles = array();
-		// Title WHERE TitlePosition = first
-		if ($config->TitlePosition == 'first' && $config->Title) {
-			$titleSeparator = ($config->TitleSeparator) ? $config->TitleSeparator : $config->titleSeparatorDefault();
-			array_push($titles, $config->Title);
-			array_push($titles, $titleSeparator);
-		}
-		// Title
-		if ($owner->Title) {
-			array_push($titles, $owner->Title);
-		}
-		// Tagline
-		if ($config->Tagline) {
-			$taglineSeparator = ($config->TaglineSeparator) ? $config->TaglineSeparator : $config->taglineSeparatorDefault();
-			array_push($titles, $taglineSeparator);
-			array_push($titles, $config->Tagline);
-		}
-		// Title WHERE TitlePosition = last
-		if ($config->TitlePosition == 'last' && $config->Title) {
-			$titleSeparator = ($config->TitleSeparator) ? $config->TitleSeparator : $config->titleSeparatorDefault();
-			array_push($titles, $titleSeparator);
-			array_push($titles, $config->Title);
-		}
-
-		// implode to create title
-		$title = implode(' ', $titles);
-
-		// return
-		return $title;
+		// return SEO title or false
+		return SiteConfig::current_site_config()->GenerateTitle($this->owner->Title);
 
 	}
 
@@ -340,9 +285,8 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	 */
 	public function GenerateDescription() {
 
-		//
 		if ($this->owner->MetaDescription) {
-			return $description = $this->owner->MetaDescription;
+			return $this->owner->MetaDescription;
 		} else {
 			return $this->owner->GenerateDescriptionFromContent();
 		}
@@ -356,16 +300,23 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	 */
 	public function GenerateDescriptionFromContent() {
 
-		// pillage content
 		if ($content = trim($this->owner->Content)) {
+
+			// pillage first paragraph from page content
 			if (preg_match( '/<p>(.*?)<\/p>/i', $content, $match)) {
+				// is HTML
 				$content = $match[0];
 			} else {
+				// is plain text
 				$content = explode("\n", $content);
 				$content = $content[0];
 			}
+
+			// decode (no harm done) & return
 			return trim(html_entity_decode(strip_tags($content)));
+
 		} else {
+			// none
 			return false;
 		}
 

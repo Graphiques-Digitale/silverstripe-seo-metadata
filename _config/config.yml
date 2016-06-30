@@ -1,6 +1,7 @@
 ---
 Name: 'SEO_Metadata'
 ---
+
 SiteConfig:
   extensions:
     - 'SEO_Metadata_SiteConfig_DataExtension'

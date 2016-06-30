@@ -1,0 +1,6 @@
+SiteConfig:
+  CharsetStatus: true
+  Charset: 'UTF-8'
+  TitleStatus: true
+  CanonicalStatus: true
+#  ExtraMetaStatus: false

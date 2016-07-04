@@ -22,19 +22,6 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 		'ExtraMeta' => 'HTMLText', // redundant, but included for backwards-compatibility
 	);
 
-	//// testing
-	protected $MetaConfig;
-	protected $MetaCharset;
-
-	public function __construct()
-	{
-		//
-		parent::__construct();
-		//
-		$this->MetaConfig = SiteConfig::current_site_config();
-		$this->MetaCharset = $this->MetaConfig->Charset;
-	}
-
 
 	/* Overload Methods
 	------------------------------------------------------------------------------*/
@@ -42,11 +29,11 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	// CMS Fields
 	public function updateCMSFields(FieldList $fields) {
 
-		// variables
+		// Variables
 		$config = SiteConfig::current_site_config();
 		$owner = $this->owner;
 
-		// remove framework default fields
+		// Remove framework default metadata group
 		$fields->removeByName(array('Metadata'));
 
 		//// Metadata

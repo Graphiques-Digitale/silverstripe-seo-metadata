@@ -1,6 +1,10 @@
 SiteConfig:
+  # Charset
   CharsetStatus: true
   Charset: 'UTF-8'
+  # Title
   TitleStatus: true
+  # Canonical
   CanonicalStatus: true
-#  ExtraMetaStatus: false
+  # Custom Metadata
+#  ExtraMetaStatus: true

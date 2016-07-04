@@ -1,5 +1,8 @@
 ---
 Name: 'SEO_Metadata'
+Ater:
+    - 'framework/*'
+    - 'cms/*'
 ---
 
 SiteConfig:

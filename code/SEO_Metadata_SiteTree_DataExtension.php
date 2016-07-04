@@ -27,7 +27,8 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	------------------------------------------------------------------------------*/
 
 	// CMS Fields
-	public function updateCMSFields(FieldList $fields) {
+	public function updateCMSFields(FieldList $fields)
+	{
 
 		// Variables
 		$config = SiteConfig::current_site_config();
@@ -86,7 +87,8 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	 *
 	 * @return string
 	 */
-	public function Metadata() {
+	public function Metadata()
+	{
 
 		// variables
 		$config = SiteConfig::current_site_config();
@@ -153,7 +155,8 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	 *
 	 * @return string
 	 */
-	public function MarkupComment($comment) {
+	public function MarkupComment($comment)
+	{
 		// return
 		return '<!-- ' . $comment . ' -->' . PHP_EOL;
 	}
@@ -167,7 +170,8 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	 *
 	 * @return string
 	 */
-	public function MarkupMeta($name, $content, $encode = false) {
+	public function MarkupMeta($name, $content, $encode = false)
+	{
 		// encode content
 		if ($encode) $content = htmlentities($content, ENT_QUOTES, $this->owner->Charset);
 		// return
@@ -184,7 +188,8 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	 *
 	 * @return string
 	 */
-	public function MarkupLink($rel, $href, $type = '', $sizes = '') {
+	public function MarkupLink($rel, $href, $type = '', $sizes = '')
+	{
 		// start fragment
 		$return = '<link rel="' . $rel . '" href="' . $href . '"';
 		// if type
@@ -210,7 +215,8 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	 *
 	 * @return string
 	 */
-	public function MarkupFacebook($property, $content, $encode = true) {
+	public function MarkupFacebook($property, $content, $encode = true)
+	{
 		// encode content
 		if ($encode) $content = htmlentities($content, ENT_QUOTES, $this->owner->Charset);
 		// format & return
@@ -226,7 +232,8 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	 *
 	 * @return string
 	 */
-	public function MarkupTwitter($name, $content, $encode = true) {
+	public function MarkupTwitter($name, $content, $encode = true)
+	{
 		// encode content
 		if ($encode) $content = htmlentities($content, ENT_QUOTES, $this->owner->Charset);
 		// format & return
@@ -242,7 +249,8 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	 *
 	 * @return string
 	 */
-	public function MarkupSchema($itemprop, $content, $encode = true) {
+	public function MarkupSchema($itemprop, $content, $encode = true)
+	{
 		// encode content
 		if ($encode) $content = htmlentities($content, ENT_QUOTES, $this->owner->Charset);
 		// format & return
@@ -258,7 +266,8 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	 *
 	 * @return bool|string
 	 */
-	public function GenerateTitle() {
+	public function GenerateTitle()
+	{
 
 		// return SEO title or false
 		return SiteConfig::current_site_config()->GenerateTitle($this->owner->Title);
@@ -270,7 +279,8 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	 *
 	 * @return bool|string
 	 */
-	public function GenerateDescription() {
+	public function GenerateDescription()
+	{
 
 		if ($this->owner->MetaDescription) {
 			return $this->owner->MetaDescription;
@@ -285,7 +295,8 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension {
 	 *
 	 * @return bool|string
 	 */
-	public function GenerateDescriptionFromContent() {
+	public function GenerateDescriptionFromContent()
+	{
 
 		if ($content = trim($this->owner->Content)) {
 

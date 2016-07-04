@@ -10,7 +10,8 @@
  *
  */
 
-class SEO_Metadata_SiteConfig_DataExtension extends DataExtension {
+class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
+{
 
 
 	/* Static Variables
@@ -35,22 +36,26 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension {
 	------------------------------------------------------------------------------*/
 
 	//
-	public function CharsetEnabled() {
+	public function CharsetEnabled()
+	{
 		return ($this->owner->config()->CharsetStatus === true) ? true : false;
 	}
 
 	//
-	public function CanonicalEnabled() {
+	public function CanonicalEnabled()
+	{
 		return ($this->owner->config()->CanonicalStatus === true) ? true : false;
 	}
 
 	//
-	public function TitleEnabled() {
+	public function TitleEnabled()
+	{
 		return ($this->owner->config()->TitleStatus === true) ? true : false;
 	}
 
 	//
-	public function ExtraMetaEnabled() {
+	public function ExtraMetaEnabled()
+	{
 		return ($this->owner->config()->ExtraMetaStatus === true) ? true : false;
 	}
 
@@ -58,7 +63,8 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension {
 	/* Config Methods
 	------------------------------------------------------------------------------*/
 
-	public function Charset() {
+	public function Charset()
+	{
 		return $this->owner->config()->Charset;
 	}
 
@@ -79,13 +85,15 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension {
 	------------------------------------------------------------------------------*/
 
 	// CMS Fields
-	public function updateCMSFields(FieldList $fields) {
-
-		// Variables
-		$owner = $this->owner;
+	public function updateCMSFields(FieldList $fields)
+	{
 
 		// Tab Set
 		$fields->addFieldToTab('Root', new TabSet('Metadata'), 'Access');
+
+		// Variables
+//		$config = SiteConfig::current_site_config();
+//		$owner = $this->owner;
 
 		//// Title
 
@@ -138,7 +146,8 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension {
 	 *
 	 * @return string
 	 */
-	public function FetchTitleSeparator() {
+	public function FetchTitleSeparator()
+	{
 
 		return ($this->owner->TitleSeparator) ? $this->owner->TitleSeparator : self::$TitleSeparatorDefault;
 
@@ -149,7 +158,8 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension {
 	 *
 	 * @return string
 	 */
-	public function FetchTaglineSeparator() {
+	public function FetchTaglineSeparator()
+	{
 
 		return ($this->owner->TaglineSeparator) ? $this->owner->TaglineSeparator : self::$TaglineSeparatorDefault;
 
@@ -160,7 +170,8 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension {
 	 *
 	 * @return string
 	 */
-	public function GenerateTitle($pageTitle = 'Title Error') {
+	public function GenerateTitle($pageTitle = 'Title Error')
+	{
 
 		// variables
 		$owner = $this->owner;

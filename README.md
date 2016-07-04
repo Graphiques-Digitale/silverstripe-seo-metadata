@@ -10,11 +10,10 @@ Title inspired by: [http://moz.com/learn/seo/title-tag][3]
 
 It is intended to be used with it's siblings:
 * [`Graphiques-Digitale/silverstripe-seo-icons`](https://github.com/Graphiques-Digitale/silverstripe-seo-icons)
-* [`Graphiques-Digitale/silverstripe-seo-authorship`](https://github.com/Graphiques-Digitale/silverstripe-seo-authorship)
 * [`Graphiques-Digitale/silverstripe-seo-facebook-insights`](https://github.com/Graphiques-Digitale/silverstripe-seo-facebook-insights)
 * [`Graphiques-Digitale/silverstripe-seo-open-graph`](https://github.com/Graphiques-Digitale/silverstripe-seo-open-graph)
-* [`Graphiques-Digitale/silverstripe-seo-twitter-cards`](https://github.com/Graphiques-Digitale/silverstripe-seo-twitter-cards)
-* [`Graphiques-Digitale/silverstripe-seo-schema-dot-org`](https://github.com/Graphiques-Digitale/silverstripe-seo-schema-dot-org)
+<!--* [`Graphiques-Digitale/silverstripe-seo-twitter-cards`](https://github.com/Graphiques-Digitale/silverstripe-seo-twitter-cards)-->
+<!--* [`Graphiques-Digitale/silverstripe-seo-schema-dot-org`](https://github.com/Graphiques-Digitale/silverstripe-seo-schema-dot-org)-->
 
 These are all optional and fragmented from the alpha version [`SSSEO`](https://github.com/Graphiques-Digitale/SSSEO), which is now redundant.
 
@@ -27,12 +26,20 @@ Also, a good overview: [5 tips for SEO with Silverstripe 3][2].
 #### Composer ####
 
 * `composer require graphiques-digitale/silverstripe-seo-metadata`
-* run `~/dev/build/?flush`
+* rebuild using `/dev/build/?flush`
 
 #### From ZIP ####
 
 * Place the extracted folder `silverstripe-seo-metadata-{version}` into `silverstripe-seo-metadata` in the SilverStripe webroot
-* run `~/dev/build/?flush`
+* rebuild using `/dev/build/?flush`
+
+## CMS Usage ##
+
+See `/silverstripe-seo-metadata/_config/app.yml` for configuration.
+
+Metadata is changed globally via `/admin/settings/` under the Metadata tab.
+
+And also locally, per page, under their Metadata tab.
 
 ## Template Usage ##
 

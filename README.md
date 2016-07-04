@@ -12,8 +12,6 @@ It is intended to be used with it's siblings:
 * [`Graphiques-Digitale/silverstripe-seo-icons`](https://github.com/Graphiques-Digitale/silverstripe-seo-icons)
 * [`Graphiques-Digitale/silverstripe-seo-facebook-insights`](https://github.com/Graphiques-Digitale/silverstripe-seo-facebook-insights)
 * [`Graphiques-Digitale/silverstripe-seo-open-graph`](https://github.com/Graphiques-Digitale/silverstripe-seo-open-graph)
-<!--* [`Graphiques-Digitale/silverstripe-seo-twitter-cards`](https://github.com/Graphiques-Digitale/silverstripe-seo-twitter-cards)-->
-<!--* [`Graphiques-Digitale/silverstripe-seo-schema-dot-org`](https://github.com/Graphiques-Digitale/silverstripe-seo-schema-dot-org)-->
 
 These are all optional and fragmented from the alpha version [`SSSEO`](https://github.com/Graphiques-Digitale/SSSEO), which is now redundant.
 

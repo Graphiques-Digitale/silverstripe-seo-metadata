@@ -69,6 +69,10 @@ This will output something along the lines of:
 </head>
 ```
 
+## Advanced Usage ##
+
+Please check the [`documentation`](https://github.com/Graphiques-Digitale/silverstripe-seo-metadata/tree/master/docs) folder for how to extend classes and more. 
+
 ## Issue Tracker ##
 
 Issues are tracked on GitHub @ [Issue Tracker](https://github.com/Graphiques-Digitale/silverstripe-seo-metadata/issues)

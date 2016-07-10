@@ -1,0 +1,7 @@
+SiteConfig:
+  Main:
+    TitleOrder: "first"
+    Title: "Test Site"
+    TitleSeparator: "1"
+    Tagline: "test tagline"
+    TaglineSeparator: "2"

@@ -1,4 +1,4 @@
-![Screenshot](screenshot-1.png)
+[![Build Status](https://travis-ci.org/Graphiques-Digitale/silverstripe-seo-metadata.svg?branch=master)](https://travis-ci.org/Graphiques-Digitale/silverstripe-seo-metadata)
 
 ## Overview ##
 
@@ -84,6 +84,8 @@ Please get in touch @ [`hello@graphiquesdigitale.net`](mailto:hello@graphiquesdi
 ## License ##
 
 MIT License
+
+![Screenshot](screenshot-1.png)
 
 ![Screenshot](screenshot-2.png)
 

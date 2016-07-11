@@ -28,7 +28,7 @@ class MySEO_Metadata_SiteTree_DataExtension extends SEO_Metadata_SiteTree_DataEx
 }
 ```
 
-### 2. Replace Existing Class With Extension Using Inject ###
+### 2. Replace Existing Class With Extension Using Injector ###
 
 In `/mysite/code/_config/config.yml`
 

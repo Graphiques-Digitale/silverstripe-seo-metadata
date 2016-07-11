@@ -34,6 +34,6 @@ In `/mysite/code/_config/config.yml`
 
 ```yml
 Injector:
-  SEO_Metadata_SiteTree_DataExtension
+  SEO_Metadata_SiteTree_DataExtension:
     class: MySEO_Metadata_SiteTree_DataExtension
 ```

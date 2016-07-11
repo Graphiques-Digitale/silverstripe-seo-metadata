@@ -10,12 +10,6 @@ In `/mysite/code/MySEO_Metadata_SiteConfig_DataExtension.php`
 class MySEO_Metadata_SiteConfig_DataExtension extends SEO_Metadata_SiteConfig_DataExtension {
 
     /**
-     * It'd be far better to override config variables via config.yml,
-     * but it can be done here
-     */
-    private static $ExtraMetaStatus = true;
-
-    /**
      * Override the GenerateTitle function
      *
      * @return string
@@ -34,6 +28,6 @@ In `/mysite/code/_config/config.yml`
 
 ```yml
 Injector:
-  SEO_Metadata_SiteConfig_DataExtension
+  SEO_Metadata_SiteConfig_DataExtension:
     class: MySEO_Metadata_SiteConfig_DataExtension
 ```

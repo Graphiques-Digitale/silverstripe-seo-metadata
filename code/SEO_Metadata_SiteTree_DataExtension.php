@@ -208,57 +208,6 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
         return $return;
     }
 
-    /**
-     * Returns markup for an Open Graph meta element.
-     *
-     * @var string $property
-     * @var string $content
-     * @var bool $encode
-     *
-     * @return string
-     */
-    public function MarkupFacebook($property, $content, $encode = true)
-    {
-
-        // format & return
-        return '<meta property="' . $property . '" content="' . $this->encodeContent($content, $encode) . '" />' . PHP_EOL;
-
-    }
-
-    /**
-     * Returns markup for a Twitter Cards meta element.
-     *
-     * @var string $name
-     * @var string $content
-     * @var bool $encode
-     *
-     * @return string
-     */
-    public function MarkupTwitter($name, $content, $encode = true)
-    {
-
-        // format & return
-        return '<meta name="' . $name . '" content="' . $this->encodeContent($content, $encode) . '" />' . PHP_EOL;
-
-    }
-
-    /**
-     * Returns markup for a Schema.org meta element.
-     *
-     * @var string $itemprop
-     * @var string $content
-     * @var bool $encode
-     *
-     * @return string
-     */
-    public function MarkupSchema($itemprop, $content, $encode = true)
-    {
-
-        // format & return
-        return '<meta itemprop="' . $itemprop . '" content="' . $this->encodeContent($content, $encode) . '" />' . PHP_EOL;
-
-    }
-
 
     /* Meta Methods
     ------------------------------------------------------------------------------*/

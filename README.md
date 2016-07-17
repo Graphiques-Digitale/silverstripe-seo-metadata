@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Graphiques-Digitale/silverstripe-seo-metadata.svg?branch=master)](https://travis-ci.org/Graphiques-Digitale/silverstripe-seo-metadata)
+[![Build Status](https://travis-ci.org/Graphiques-Digitale/silverstripe-seo-metadata.svg?branch=master)](https://travis-ci.org/Graphiques-Digitale/silverstripe-seo-metadata) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Graphiques-Digitale/silverstripe-seo-metadata/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Graphiques-Digitale/silverstripe-seo-metadata/?branch=master)
 
 ## Overview ##
 

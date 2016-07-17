@@ -157,8 +157,10 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
      */
     public function MarkupComment($comment)
     {
+
         // return
         return '<!-- ' . $comment . ' -->' . PHP_EOL;
+
     }
 
     /**
@@ -172,12 +174,10 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
      */
     public function MarkupMeta($name, $content, $encode = false)
     {
-        // encode content
-        if ($encode) {
-            $content = htmlentities($content, ENT_QUOTES, $this->owner->Charset);
-        }
+
         // return
-        return '<meta name="' . $name . '" content="' . $content . '" />' . PHP_EOL;
+        return '<meta name="' . $name . '" content="' . $this->encodeContent($content, $encode) . '" />' . PHP_EOL;
+
     }
 
     /**
@@ -211,58 +211,52 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
     /**
      * Returns markup for an Open Graph meta element.
      *
-     * @var $property
-     * @var $content
-     * @var $encode
+     * @var string $property
+     * @var string $content
+     * @var bool $encode
      *
      * @return string
      */
     public function MarkupFacebook($property, $content, $encode = true)
     {
-        // encode content
-        if ($encode) {
-            $content = htmlentities($content, ENT_QUOTES, $this->owner->Charset);
-        }
+
         // format & return
-        return '<meta property="' . $property . '" content="' . $content . '" />' . PHP_EOL;
+        return '<meta property="' . $property . '" content="' . $this->encodeContent($content, $encode) . '" />' . PHP_EOL;
+
     }
 
     /**
      * Returns markup for a Twitter Cards meta element.
      *
-     * @var $name
-     * @var $content
-     * @var $encode
+     * @var string $name
+     * @var string $content
+     * @var bool $encode
      *
      * @return string
      */
     public function MarkupTwitter($name, $content, $encode = true)
     {
-        // encode content
-        if ($encode) {
-            $content = htmlentities($content, ENT_QUOTES, $this->owner->Charset);
-        }
+
         // format & return
-        return '<meta name="' . $name . '" content="' . $content . '" />' . PHP_EOL;
+        return '<meta name="' . $name . '" content="' . $this->encodeContent($content, $encode) . '" />' . PHP_EOL;
+
     }
 
     /**
      * Returns markup for a Schema.org meta element.
      *
-     * @var $itemprop
-     * @var $content
-     * @var $encode
+     * @var string $itemprop
+     * @var string $content
+     * @var bool $encode
      *
      * @return string
      */
     public function MarkupSchema($itemprop, $content, $encode = true)
     {
-        // encode content
-        if ($encode) {
-            $content = htmlentities($content, ENT_QUOTES, $this->owner->Charset);
-        }
+
         // format & return
-        return '<meta itemprop="' . $itemprop . '" content="' . $content . '" />' . PHP_EOL;
+        return '<meta itemprop="' . $itemprop . '" content="' . $this->encodeContent($content, $encode) . '" />' . PHP_EOL;
+
     }
 
 
@@ -326,6 +320,22 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
             return false;
         }
 
+    }
+
+    /**
+     * Returns a plain or HTML-encoded string according to the current charset & encoding settings.
+     *
+     * @param string $content
+     * @param bool $encode
+     *
+     * @return string
+     */
+    public function encodeContent($content, $encode = true) {
+        if ($encode) {
+            return htmlentities($content, ENT_QUOTES, $this->owner->Charset);
+        } else {
+            return $content;
+        }
     }
 
 }

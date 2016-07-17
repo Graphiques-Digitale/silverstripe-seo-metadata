@@ -16,55 +16,63 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
     /* Static Variables
     ------------------------------------------------------------------------------*/
 
-    //
+    // status variables
     private static $CharsetStatus = false;
-    private static $Charset = false;
     private static $CanonicalStatus = false;
     private static $TitleStatus = false;
     private static $ExtraMetaStatus = false;
 
-    //
+    // defaults
+    private static $Charset = 'UTF-8';
     private static $TitleSeparatorDefault = '|';
     private static $TaglineSeparatorDefault = '-';
-
-    //
-    private static $SEOMetadataUpload = 'SEO/Metadata/';
 
 
     /* Status Methods
     ------------------------------------------------------------------------------*/
 
-    //
+    /**
+     * @return bool
+     */
     public function CharsetEnabled()
     {
-        return ($this->owner->config()->CharsetStatus === true) ? true : false;
+        return ($this->owner->config()->CharsetStatus === true) ? true : self::$CharsetStatus;
     }
 
-    //
+    /**
+     * @return bool
+     */
     public function CanonicalEnabled()
     {
-        return ($this->owner->config()->CanonicalStatus === true) ? true : false;
+        return ($this->owner->config()->CanonicalStatus === true) ? true : self::$CanonicalStatus;
     }
 
-    //
+    /**
+     * @return bool
+     */
     public function TitleEnabled()
     {
-        return ($this->owner->config()->TitleStatus === true) ? true : false;
+        return ($this->owner->config()->TitleStatus === true) ? true : self::$TitleStatus;
     }
 
-    //
+    /**
+     * @return bool
+     */
     public function ExtraMetaEnabled()
     {
-        return ($this->owner->config()->ExtraMetaStatus === true) ? true : false;
+        return ($this->owner->config()->ExtraMetaStatus === true) ? true : self::$ExtraMetaStatus;
     }
 
 
     /* Config Methods
     ------------------------------------------------------------------------------*/
 
+    /**
+     * @return string
+     */
     public function Charset()
     {
-        return $this->owner->config()->Charset;
+        return ($this->owner->config()->Charset) ? $this->owner->config()->Charset : self::$Charset;
     }
 
 
@@ -89,10 +97,6 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
 
         // Tab Set
         $fields->addFieldToTab('Root', new TabSet('Metadata'), 'Access');
-
-        // Variables
-//		$config = SiteConfig::current_site_config();
-//		$owner = $this->owner;
 
         //// Title
 
@@ -166,6 +170,8 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
 
     /**
      * Generates HTML title based on configuration settings.
+     *
+     * @param string $pageTitle
      *
      * @return string
      */

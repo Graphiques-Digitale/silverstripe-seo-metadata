@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Adds enhanced HTML SEO metadata.
  *
@@ -7,24 +6,84 @@
  * @subpackage Metadata
  * @author Andrew Gerber <atari@graphiquesdigitale.net>
  * @version 1.0.0
+ */
+
+/**
+ * Class SEO_Metadata_SiteConfig_DataExtension
  *
+ * Adds additional statuses and defaults to control metadata output.
  */
 class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
 {
 
-
-    /* Static Variables
+    /* Attributes
     ------------------------------------------------------------------------------*/
 
-    // status variables
+    //// statuses
+
+    /**
+     * Character set status.
+     *
+     * Boolean value governing whether the character set is output.
+     *
+     * @var bool $CharsetStatus
+     */
     private static $CharsetStatus = false;
+
+    /**
+     * `rel="canonical"` status.
+     *
+     * Boolean value governing whether canonical links are output.
+     *
+     * @var bool $CanonicalStatus
+     */
     private static $CanonicalStatus = false;
+
+    /**
+     * Title status.
+     *
+     * Boolean value governing whether the page title should be output.
+     *
+     * @var bool $TitleStatus
+     */
     private static $TitleStatus = false;
+
+    /**
+     * Extra metadata status.
+     *
+     * Boolean value governing whether additional (arbitrary) metadata can be added to pages.
+     *
+     * @var bool $ExtraMetaStatus
+     */
     private static $ExtraMetaStatus = false;
 
-    // defaults
+    //// defaults
+
+    /**
+     * Character set.
+     *
+     * The character set to be used. Should always be `UTF-8` except for fringe configurations.
+     *
+     * @var string
+     */
     private static $Charset = 'UTF-8';
+
+    /**
+     * Default title separator.
+     *
+     * The default title (primary) separator.
+     *
+     * @var string
+     */
     private static $TitleSeparatorDefault = '|';
+
+    /**
+     * Default tagline separator.
+     *
+     * The default tagline (secondary) separator.
+     *
+     * @var string
+     */
     private static $TaglineSeparatorDefault = '-';
 
 
@@ -32,6 +91,10 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
     ------------------------------------------------------------------------------*/
 
     /**
+     * Character set enabled.
+     *
+     * Gets whether the character set should be output.
+     *
      * @return bool
      */
     public function CharsetEnabled()
@@ -40,6 +103,10 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
     }
 
     /**
+     * Canonical links enabled.
+     *
+     * Gets whether the canonical link should be output.
+     *
      * @return bool
      */
     public function CanonicalEnabled()
@@ -48,6 +115,10 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
     }
 
     /**
+     * Title enabled.
+     *
+     * Gets whether the title should be output.
+     *
      * @return bool
      */
     public function TitleEnabled()
@@ -56,6 +127,10 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
     }
 
     /**
+     * Extra metadata enabled.
+     *
+     * Gets whether additional (arbitrary) metadata should be output.
+     *
      * @return bool
      */
     public function ExtraMetaEnabled()
@@ -68,6 +143,10 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
     ------------------------------------------------------------------------------*/
 
     /**
+     * Character set.
+     *
+     * Gets the character set from configuration, or uses the class-defined default.
+     *
      * @return string
      */
     public function Charset()
@@ -79,6 +158,13 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
     /* Overload Model
     ------------------------------------------------------------------------------*/
 
+    /**
+     * Database fields.
+     *
+     * An associative array of database fields: `name` => `type`.
+     *
+     * @var array $db
+     */
     private static $db = array(
         'TitleOrder' => 'Enum(array("first", "last"), "first")',
         'Title' => 'Text', // redundant, but included for backwards-compatibility
@@ -91,10 +177,9 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
     /* Overload Methods
     ------------------------------------------------------------------------------*/
 
-    // CMS Fields
+    // @todo @inheritdoc ?? or does it happen automagically as promised?
     public function updateCMSFields(FieldList $fields)
     {
-
         // Tab Set
         $fields->addFieldToTab('Root', new TabSet('Metadata'), 'Access');
 
@@ -137,7 +222,6 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
                     ->setDescription('optional')
             ));
         }
-
     }
 
 
@@ -145,31 +229,33 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
     ------------------------------------------------------------------------------*/
 
     /**
-     * Fetches the title separator, falls back to default
+     * Fetch title separator.
+     *
+     * Fetches the title (primary) separator, falls back to default.
      *
      * @return string
      */
     public function FetchTitleSeparator()
     {
-
         return ($this->owner->TitleSeparator) ? $this->owner->TitleSeparator : self::$TitleSeparatorDefault;
-
     }
 
     /**
-     * Fetches the tagline separator, falls back to default
+     * Fetch tagline separator.
+     *
+     * Fetches the tagline (secondary) separator, falls back to default.
      *
      * @return string
      */
     public function FetchTaglineSeparator()
     {
-
         return ($this->owner->TaglineSeparator) ? $this->owner->TaglineSeparator : self::$TaglineSeparatorDefault;
-
     }
 
     /**
      * Generates HTML title based on configuration settings.
+     *
+     * @dev Override this function for any custom title functionality.
      *
      * @param string $pageTitle
      *
@@ -177,10 +263,10 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
      */
     public function GenerateTitle($pageTitle = 'Title Error')
     {
-
         // variables
         $owner = $this->owner;
 
+        // if the is a site name
         if ($owner->Title) {
 
             // title parts, begin with name/title
@@ -201,26 +287,22 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
                 // add to the end
                 array_push($titles, $owner->FetchTitleSeparator());
                 array_push($titles, $pageTitle);
-
             }
 
             // implode to create title
             $title = implode(' ', $titles);
 
-            // @todo remove whitespace before certain characters e.g. `,` `.` `;` `:`
-            //
-            $title = preg_replace('/\s*[,.:]/', '', $title);
+            // removes whitespace before punctuation marks: `,.;:!?`
+            // @todo isn't this a little bit random ?
+            $title = preg_replace('/\s*[,.;:!?]/', '', $title);
 
             // return
             return $title;
 
         } else {
-
-            // just return the page title if there is no name
+            // just return the page title if there is no site name
             return $pageTitle;
-
         }
-
     }
 
 }

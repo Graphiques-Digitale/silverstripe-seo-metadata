@@ -47,6 +47,7 @@
 #Root #Metadata .field .success.favicon {
 	padding-bottom: 24px;
 	background: transparent url('/favicon.ico') no-repeat left bottom;
+	background-size: 16px 16px;
 }
 
 /* special pre-formatted style */

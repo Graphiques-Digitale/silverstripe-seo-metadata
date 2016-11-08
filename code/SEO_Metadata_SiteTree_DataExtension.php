@@ -127,7 +127,7 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
 
         // extra metadata
         if ($config->ExtraMetaEnabled()) {
-            if ($extraMeta = $owner->ExtraMeta != '') {
+            if ($owner->ExtraMeta != '') {
                 $metadata .= $owner->MarkupComment('Extra Metadata');
                 $metadata .= $owner->ExtraMeta . PHP_EOL;
             }
@@ -232,7 +232,7 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
     /**
      * Generates description from the first paragraph of the `Content` attribute.
      *
-     * @return bool|string
+     * @return string|null
      */
     public function GenerateDescriptionFromContent()
     {
@@ -250,8 +250,7 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
             // decode (no harm done) & return
             return trim(html_entity_decode(strip_tags($content)));
         } else {
-            // none
-            return false;
+            return null;
         }
     }
 

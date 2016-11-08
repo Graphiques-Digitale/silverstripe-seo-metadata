@@ -87,18 +87,48 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
         // variables
         $config = SiteConfig::current_site_config();
         $owner = $this->owner;
+
         // begin SEO
         $metadata = PHP_EOL . $owner->MarkupComment('SEO');
+
+        // register extension update hook
+        $owner->extend('updateMetadata', $config, $owner, $metadata);
+
+        // end
+        $metadata .= $owner->MarkupComment('END SEO');
+
+        // return
+        return $metadata;
+    }
+
+
+    /* Template Methods
+    ------------------------------------------------------------------------------*/
+
+    /**
+     * Updates metadata fields.
+     *
+     * @param SiteConfig $config
+     * @param SiteTree $owner
+     * @param $metadata
+     *
+     * @return void
+     */
+    public function updateMetadata(SiteConfig $config, SiteTree $owner, &$metadata)
+    {
         // metadata
         $metadata .= $owner->MarkupComment('Metadata');
+
         // charset
         if ($config->CharsetEnabled()) {
             $metadata .= '<meta charset="' . $config->Charset() . '" />' . PHP_EOL;
         }
+
         // canonical
         if ($config->CanonicalEnabled()) {
             $metadata .= $owner->MarkupLink('canonical', $owner->AbsoluteLink());
         }
+
         // title
         if ($config->TitleEnabled()) {
             // ternary setter
@@ -106,8 +136,10 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
             // safe output
             $metadata .= '<title>' . htmlentities($title, ENT_QUOTES, $config->Charset()) . '</title>' . PHP_EOL;
         }
+
         // description
         $metadata .= $owner->MarkupMeta('description', $owner->GenerateDescription(), true, $config->Charset());
+
         // extra metadata
         if ($config->ExtraMetaEnabled()) {
             if ($owner->ExtraMeta != '') {
@@ -115,12 +147,6 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
                 $metadata .= $owner->ExtraMeta . PHP_EOL;
             }
         }
-        // extension update hook
-        $owner->extend('updateMetadata', $config, $owner, $metadata);
-        // end
-        $metadata .= $owner->MarkupComment('END SEO');
-        // return
-        return $metadata;
     }
 
 

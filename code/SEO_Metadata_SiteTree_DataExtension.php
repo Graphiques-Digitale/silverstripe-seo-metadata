@@ -141,11 +141,9 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
         $metadata .= $owner->MarkupMeta('description', $owner->GenerateDescription(), true, $config->Charset());
 
         // extra metadata
-        if ($config->ExtraMetaEnabled()) {
-            if ($owner->ExtraMeta != '') {
-                $metadata .= $owner->MarkupComment('Extra Metadata');
-                $metadata .= $owner->ExtraMeta . PHP_EOL;
-            }
+        if ($config->ExtraMetaEnabled() && $owner->ExtraMeta) {
+            $metadata .= $owner->MarkupComment('Extra Metadata');
+            $metadata .= $owner->ExtraMeta . PHP_EOL;
         }
     }
 

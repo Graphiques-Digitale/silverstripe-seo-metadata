@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Extends SiteTree with basic metadata fields, as well as the main `Metadata()` method.
  *
@@ -7,15 +6,22 @@
  * @subpackage metadata
  * @author Andrew Gerber <atari@graphiquesdigitale.net>
  * @version 1.0.0
- *
+ */
+
+/**
+ * Class SEO_Metadata_SiteTree_DataExtension
  */
 class SEO_Metadata_SiteTree_DataExtension extends DataExtension
 {
 
-
     /* Overload Model
     ------------------------------------------------------------------------------*/
 
+    /**
+     * Database attributes.
+     *
+     * @var array $db
+     */
     private static $db = array(
         'MetaTitle' => 'Varchar(128)',
         'MetaDescription' => 'Text', // redundant, but included for backwards-compatibility
@@ -26,10 +32,9 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
     /* Overload Methods
     ------------------------------------------------------------------------------*/
 
-    // CMS Fields
+    // @todo @inheritdoc ?? or does it happen automagically as promised?
     public function updateCMSFields(FieldList $fields)
     {
-
         // Variables
         $config = SiteConfig::current_site_config();
         $owner = $this->owner;
@@ -38,6 +43,7 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
         $fields->removeByName(array('Metadata'));
 
         //// Metadata
+
         $tab = 'Root.Metadata.SEO';
 
         // Canonical
@@ -77,7 +83,6 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
             LiteralField::create('HeaderMetadata', '<pre class="bold">$Metadata()</pre>'),
             LiteralField::create('LiteralMetadata', '<pre>' . nl2br(htmlentities(trim($owner->Metadata()), ENT_QUOTES)) . '</pre>')
         ));
-
     }
 
     /**
@@ -89,7 +94,6 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
      */
     public function Metadata()
     {
-
         // variables
         $config = SiteConfig::current_site_config();
         $owner = $this->owner;
@@ -112,20 +116,16 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
 
         // title
         if ($config->TitleEnabled()) {
-
-            // ternary operation
-            // @todo Check what is going here ?!
+            // ternary setter
             $title = ($owner->MetaTitle) ? $owner->MetaTitle : $owner->GenerateTitle();
-            //
+            // safe output
             $metadata .= '<title>' . htmlentities($title, ENT_QUOTES, $config->Charset()) . '</title>' . PHP_EOL;
-
         }
 
         // description
         $metadata .= $owner->MarkupMeta('description', $owner->GenerateDescription(), true, $config->Charset());
 
-        //// ExtraMeta
-
+        // extra metadata
         if ($config->ExtraMetaEnabled()) {
             if ($extraMeta = $owner->ExtraMeta != '') {
                 $metadata .= $owner->MarkupComment('Extra Metadata');
@@ -133,7 +133,7 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
             }
         }
 
-        //// extension update hook
+        // extension update hook
         $owner->extend('updateMetadata', $config, $owner, $metadata);
 
         // end
@@ -141,7 +141,6 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
 
         // return
         return $metadata;
-
     }
 
 
@@ -157,10 +156,7 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
      */
     public function MarkupComment($comment)
     {
-
-        // return
         return '<!-- ' . $comment . ' -->' . PHP_EOL;
-
     }
 
     /**
@@ -174,10 +170,7 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
      */
     public function MarkupMeta($name, $content, $encode = false)
     {
-
-        // return
         return '<meta name="' . $name . '" content="' . $this->encodeContent($content, $encode) . '" />' . PHP_EOL;
-
     }
 
     /**
@@ -215,30 +208,25 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
     /**
      * Generates HTML title based on configuration settings.
      *
-     * @return bool|string
+     * @return string|null
      */
     public function GenerateTitle()
     {
-
-        // return SEO title or false
         return SiteConfig::current_site_config()->GenerateTitle($this->owner->Title);
-
     }
 
     /**
      * Returns description from the page `MetaDescription`, or the first paragraph of the `Content` attribute.
      *
-     * @return bool|string
+     * @return string|null
      */
     public function GenerateDescription()
     {
-
         if ($this->owner->MetaDescription) {
             return $this->owner->MetaDescription;
         } else {
             return $this->owner->GenerateDescriptionFromContent();
         }
-
     }
 
     /**
@@ -248,27 +236,23 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
      */
     public function GenerateDescriptionFromContent()
     {
-
+        // check for content
         if ($content = trim($this->owner->Content)) {
-
             // pillage first paragraph from page content
             if (preg_match('/<p>(.*?)<\/p>/i', $content, $match)) {
                 // is HTML
                 $content = $match[0];
             } else {
                 // is plain text
-                $content = explode("\n", $content);
+                $content = explode(PHP_EOL, $content);
                 $content = $content[0];
             }
-
             // decode (no harm done) & return
             return trim(html_entity_decode(strip_tags($content)));
-
         } else {
             // none
             return false;
         }
-
     }
 
     /**

@@ -38,21 +38,16 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
         // Variables
         $config = SiteConfig::current_site_config();
         $owner = $this->owner;
-
         // Remove framework default metadata group
         $fields->removeByName(array('Metadata'));
-
         //// Metadata
-
         $tab = 'Root.Metadata.SEO';
-
         // Canonical
         if ($config->CanonicalEnabled()) {
             $fields->addFieldsToTab($tab, array(
                 ReadonlyField::create('ReadonlyMetaCanonical', 'link rel="canonical"', $owner->AbsoluteLink())
             ));
         }
-
         // Title
         if ($config->TitleEnabled()) {
             $fields->addFieldsToTab($tab, array(
@@ -60,24 +55,19 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
                     ->setAttribute('placeholder', $owner->GenerateTitle())
             ));
         }
-
         // Description
         $fields->addFieldsToTab($tab, array(
             TextareaField::create('MetaDescription', 'meta description')
                 ->setAttribute('placeholder', $owner->GenerateDescriptionFromContent())
         ));
-
         // ExtraMeta
         if ($config->ExtraMetaEnabled()) {
             $fields->addFieldsToTab($tab, array(
                 TextareaField::create('ExtraMeta', 'Custom Metadata')
             ));
         }
-
         //// Full Output
-
         $tab = 'Root.Metadata.FullOutput';
-
         // monospaced, HTML SEO output
         $fields->addFieldsToTab($tab, array(
             LiteralField::create('HeaderMetadata', '<pre class="bold">$Metadata()</pre>'),
@@ -97,23 +87,18 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
         // variables
         $config = SiteConfig::current_site_config();
         $owner = $this->owner;
-
         // begin SEO
         $metadata = PHP_EOL . $owner->MarkupComment('SEO');
-
         // metadata
         $metadata .= $owner->MarkupComment('Metadata');
-
         // charset
         if ($config->CharsetEnabled()) {
             $metadata .= '<meta charset="' . $config->Charset() . '" />' . PHP_EOL;
         }
-
         // canonical
         if ($config->CanonicalEnabled()) {
             $metadata .= $owner->MarkupLink('canonical', $owner->AbsoluteLink());
         }
-
         // title
         if ($config->TitleEnabled()) {
             // ternary setter
@@ -121,10 +106,8 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
             // safe output
             $metadata .= '<title>' . htmlentities($title, ENT_QUOTES, $config->Charset()) . '</title>' . PHP_EOL;
         }
-
         // description
         $metadata .= $owner->MarkupMeta('description', $owner->GenerateDescription(), true, $config->Charset());
-
         // extra metadata
         if ($config->ExtraMetaEnabled()) {
             if ($owner->ExtraMeta != '') {
@@ -132,13 +115,10 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
                 $metadata .= $owner->ExtraMeta . PHP_EOL;
             }
         }
-
         // extension update hook
         $owner->extend('updateMetadata', $config, $owner, $metadata);
-
         // end
         $metadata .= $owner->MarkupComment('END SEO');
-
         // return
         return $metadata;
     }

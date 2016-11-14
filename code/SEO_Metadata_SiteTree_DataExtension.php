@@ -161,7 +161,7 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
      *
      * @param string $name
      * @param string $content
-     * @param null $encode
+     * @param string|null $encode
      *
      * @return string
      */

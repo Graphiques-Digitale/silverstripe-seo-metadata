@@ -153,7 +153,7 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
     /**
      * Returns a given string as a HTML comment.
      *
-     * @var string $comment
+     * @param string $comment
      *
      * @return string
      */
@@ -185,21 +185,21 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
      *
      * @param string $rel
      * @param string $href
-     * @param string $type
-     * @param string $sizes
+     * @param string|null $type
+     * @param string|null $sizes
      *
      * @return string
      */
-    public function MarkupLink($rel, $href, $type = '', $sizes = '')
+    public function MarkupLink($rel, $href, $type = null, $sizes = null)
     {
         // start fragment
         $return = '<link rel="' . $rel . '" href="' . $href . '"';
         // if type
-        if ($type) {
+        if ($type !== null) {
             $return .= ' type="' . $type . '"';
         }
         // if sizes
-        if ($sizes) {
+        if ($sizes !== null) {
             $return .= ' sizes="' . $sizes . '"';
         }
         // end fragment

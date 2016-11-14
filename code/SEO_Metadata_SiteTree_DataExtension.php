@@ -35,39 +35,63 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
     // @todo @inheritdoc ?? or does it happen automagically as promised?
     public function updateCMSFields(FieldList $fields)
     {
-        // Variables
-        $config = SiteConfig::current_site_config();
 
         // Remove framework default metadata group
         $fields->removeByName(array('Metadata'));
 
-        //// SEO metadata
+        // Add to fields
+        $fields->addFieldsToTab('Root.Metadata.SEO', $this->owner->getSEOFields());
+
+        //// Full output
+        // monospaced, HTML SEO output
+        $fields->addFieldsToTab('Root.Metadata.FullOutput', $this->owner->getFullOutput());
+    }
+
+    /**
+     * Gets SEO fields.
+     *
+     * @return array
+     */
+    public function getSEOFields()
+    {
+        // Variables
+        $config = SiteConfig::current_site_config();
         $SEO = [];
+
         // Canonical
         if ($config->CanonicalEnabled()) {
             $SEO[] = ReadonlyField::create('ReadonlyMetaCanonical', 'link rel="canonical"', $this->owner->AbsoluteLink());
         }
+
         // Title
         if ($config->TitleEnabled()) {
             $SEO[] = TextField::create('MetaTitle', 'meta title')
                 ->setAttribute('placeholder', $this->owner->GenerateTitle());
         }
+
         // Description
         $SEO[] = TextareaField::create('MetaDescription', 'meta description')
             ->setAttribute('placeholder', $this->owner->GenerateDescriptionFromContent());
+
         // ExtraMeta
         if ($config->ExtraMetaEnabled()) {
             $SEO[] = TextareaField::create('ExtraMeta', 'Custom Metadata');
         }
-        // Add to fields
-        $fields->addFieldsToTab('Root.Metadata.SEO', $SEO);
 
-        //// Full output
-        // monospaced, HTML SEO output
-        $fields->addFieldsToTab('Root.Metadata.FullOutput', array(
+        return $SEO;
+    }
+
+    /**
+     * Gets the full output.
+     *
+     * @return array
+     */
+    public function getFullOutput()
+    {
+        return array(
             LiteralField::create('HeaderMetadata', '<pre class="bold">$Metadata()</pre>'),
             LiteralField::create('LiteralMetadata', '<pre>' . nl2br(htmlentities(trim($this->owner->Metadata()), ENT_QUOTES)) . '</pre>')
-        ));
+        );
     }
 
     /**

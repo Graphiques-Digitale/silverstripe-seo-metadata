@@ -86,6 +86,16 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
      */
     private static $TaglineSeparatorDefault = '-';
 
+    /**
+     * Title ordering options.
+     *
+     * @var array
+     */
+    protected static $TitleOrderOptions = array(
+        'first' => 'Page Title | Website Name - Tagline',
+        'last' => 'Website Name - Tagline | Page Title'
+    );
+
 
     /* Status Methods
     ------------------------------------------------------------------------------*/
@@ -183,45 +193,50 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
         // Tab Set
         $fields->addFieldToTab('Root', new TabSet('Metadata'), 'Access');
 
-        //// Title
-
+        // Title
         if ($this->TitleEnabled()) {
-
-            // Tab
-            $tab = 'Root.Metadata.Title';
-
-            // Title Order Options
-            $titleOrderOptions = array(
-                'first' => 'Page Title | Website Name - Tagline',
-                'last' => 'Website Name - Tagline | Page Title'
-            );
-
-            // Fields
-            $fields->addFieldsToTab($tab, array(
-                // Information
-                LabelField::create('FaviconDescription', 'A title tag is the main text that describes an online document. Title elements have long been considered one of the most important on-page SEO elements (the most important being overall content), and appear in three key places: browsers, search engine results pages, and external websites.<br />@ <a href="https://moz.com/learn/seo/title-tag" target="_blank">Title Tag - Learn SEO - Mozilla</a>')
-                    ->addExtraClass('information'),
-                // Title Order
-                DropdownField::create('TitleOrder', 'Page Title Order', $titleOrderOptions),
-                // Title Separator
-                TextField::create('TitleSeparator', 'Page Title Separator')
-                    ->setAttribute('placeholder', self::$TitleSeparatorDefault)
-                    ->setAttribute('size', 1)
-                    ->setMaxLength(1)
-                    ->setDescription('max 1 character'),
-                // Title
-                TextField::create('Title', 'Website Name'),
-                // Tagline Separator
-                TextField::create('TaglineSeparator', 'Tagline Separator')
-                    ->setAttribute('placeholder', self::$TaglineSeparatorDefault)
-                    ->setAttribute('size', 1)
-                    ->setMaxLength(1)
-                    ->setDescription('max 1 character'),
-                // Tagline
-                TextField::create('Tagline', 'Tagline')
-                    ->setDescription('optional')
-            ));
+            $fields->addFieldsToTab('Root.Metadata.Title', $this->owner->getTitleFields());
         }
+    }
+
+
+    /* Custom Methods
+    ------------------------------------------------------------------------------*/
+
+    /**
+     * Gets the title fields.
+     *
+     * This approach for getting fields for updateCMSFields is to be duplicated through all other modules to reduce complexity.
+     *
+     * @TODO i18n implementation
+     *
+     * @return array
+     */
+    public function getTitleFields() {
+        return array(
+            // Information
+            LabelField::create('FaviconDescription', 'A title tag is the main text that describes an online document. Title elements have long been considered one of the most important on-page SEO elements (the most important being overall content), and appear in three key places: browsers, search engine results pages, and external websites.<br />@ <a href="https://moz.com/learn/seo/title-tag" target="_blank">Title Tag - Learn SEO - Mozilla</a>')
+                ->addExtraClass('information'),
+            // Title Order
+            DropdownField::create('TitleOrder', 'Page Title Order', self::$TitleOrderOptions),
+            // Title Separator
+            TextField::create('TitleSeparator', 'Page Title Separator')
+                ->setAttribute('placeholder', self::$TitleSeparatorDefault)
+                ->setAttribute('size', 1)
+                ->setMaxLength(1)
+                ->setDescription('max 1 character'),
+            // Title
+            TextField::create('Title', 'Website Name'),
+            // Tagline Separator
+            TextField::create('TaglineSeparator', 'Tagline Separator')
+                ->setAttribute('placeholder', self::$TaglineSeparatorDefault)
+                ->setAttribute('size', 1)
+                ->setMaxLength(1)
+                ->setDescription('max 1 character'),
+            // Tagline
+            TextField::create('Tagline', 'Tagline')
+                ->setDescription('optional')
+        );
     }
 
 

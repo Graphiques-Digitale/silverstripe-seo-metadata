@@ -262,7 +262,7 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
     /**
      * Generates extra metadata.
      *
-     * return string
+     * @return string
      */
     public function GenerateExtraMeta()
     {

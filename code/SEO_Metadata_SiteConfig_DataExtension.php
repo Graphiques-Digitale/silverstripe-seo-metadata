@@ -28,7 +28,7 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
      *
      * @var bool $CharsetStatus
      */
-    private static $CharsetStatus = false;
+    protected static $CharsetStatus = false;
 
     /**
      * `rel="canonical"` status.
@@ -37,7 +37,7 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
      *
      * @var bool $CanonicalStatus
      */
-    private static $CanonicalStatus = false;
+    protected static $CanonicalStatus = false;
 
     /**
      * Title status.
@@ -46,7 +46,7 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
      *
      * @var bool $TitleStatus
      */
-    private static $TitleStatus = false;
+    protected static $TitleStatus = false;
 
     /**
      * Extra metadata status.
@@ -55,7 +55,7 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
      *
      * @var bool $ExtraMetaStatus
      */
-    private static $ExtraMetaStatus = false;
+    protected static $ExtraMetaStatus = false;
 
     //// defaults
 
@@ -66,7 +66,7 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
      *
      * @var string
      */
-    private static $Charset = 'UTF-8';
+    protected static $Charset = 'UTF-8';
 
     /**
      * Default title separator.
@@ -75,7 +75,7 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
      *
      * @var string
      */
-    private static $TitleSeparatorDefault = '|';
+    protected static $TitleSeparatorDefault = '|';
 
     /**
      * Default tagline separator.
@@ -84,7 +84,7 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
      *
      * @var string
      */
-    private static $TaglineSeparatorDefault = '-';
+    protected static $TaglineSeparatorDefault = '-';
 
     /**
      * Title ordering options.

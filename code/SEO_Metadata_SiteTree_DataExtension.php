@@ -35,15 +35,11 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
     // @todo @inheritdoc ?? or does it happen automagically as promised?
     public function updateCMSFields(FieldList $fields)
     {
-
         // Remove framework default metadata group
         $fields->removeByName(array('Metadata'));
-
-        // Add to fields
+        // Add SEO
         $fields->addFieldsToTab('Root.Metadata.SEO', $this->owner->getSEOFields());
-
-        //// Full output
-        // monospaced, HTML SEO output
+        // Add full output
         $fields->addFieldsToTab('Root.Metadata.FullOutput', $this->owner->getFullOutput());
     }
 
@@ -57,27 +53,22 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
         // Variables
         $config = SiteConfig::current_site_config();
         $SEO = [];
-
         // Canonical
         if ($config->CanonicalEnabled()) {
             $SEO[] = ReadonlyField::create('ReadonlyMetaCanonical', 'link rel="canonical"', $this->owner->AbsoluteLink());
         }
-
         // Title
         if ($config->TitleEnabled()) {
             $SEO[] = TextField::create('MetaTitle', 'meta title')
                 ->setAttribute('placeholder', $this->owner->GenerateTitle());
         }
-
         // Description
         $SEO[] = TextareaField::create('MetaDescription', 'meta description')
             ->setAttribute('placeholder', $this->owner->GenerateDescriptionFromContent());
-
         // ExtraMeta
         if ($config->ExtraMetaEnabled()) {
             $SEO[] = TextareaField::create('ExtraMeta', 'Custom Metadata');
         }
-
         return $SEO;
     }
 
@@ -105,16 +96,12 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
     {
         // variables
         $config = SiteConfig::current_site_config();
-
         // begin SEO
         $metadata = PHP_EOL . $this->owner->MarkupComment('SEO');
-
         // register extension update hook
         $this->owner->extend('updateMetadata', $config, $this->owner, $metadata);
-
         // end
         $metadata .= $this->owner->MarkupComment('END SEO');
-
         // return
         return $metadata;
     }
@@ -136,27 +123,22 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
     {
         // metadata
         $metadata .= $owner->MarkupComment('Metadata');
-
         // charset
         if ($config->CharsetEnabled()) {
             $metadata .= '<meta charset="' . $config->Charset() . '" />' . PHP_EOL;
         }
-
         // canonical
         if ($config->CanonicalEnabled()) {
             $metadata .= $owner->MarkupLink('canonical', $owner->AbsoluteLink());
         }
-
         // title
         if ($config->TitleEnabled()) {
             $metadata .= '<title>' . $owner->encodeContent($owner->GenerateTitle(), $config->Charset()) . '</title>' . PHP_EOL;
         }
-
         // description
         if ($description = $owner->GenerateDescription()) {
             $metadata .= $owner->MarkupMeta('description', $description, $config->Charset());
         }
-
         // extra metadata
         if ($config->ExtraMetaEnabled()) {
             $metadata .= $owner->MarkupComment('Extra Metadata');

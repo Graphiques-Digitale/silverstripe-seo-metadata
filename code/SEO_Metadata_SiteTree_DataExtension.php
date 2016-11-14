@@ -110,7 +110,7 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
      *
      * @param SiteConfig $config
      * @param SiteTree $owner
-     * @param $metadata
+     * @param string $metadata
      *
      * @return void
      */
@@ -131,24 +131,23 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
 
         // title
         if ($config->TitleEnabled()) {
-            // ternary setter
-            $title = ($owner->MetaTitle) ? $owner->MetaTitle : $owner->GenerateTitle();
-            // safe output
-            $metadata .= '<title>' . htmlentities($title, ENT_QUOTES, $config->Charset()) . '</title>' . PHP_EOL;
+            $metadata .= '<title>' . $owner->encodeContent($owner->GenerateTitle(), $config->Charset()) . '</title>' . PHP_EOL;
         }
 
         // description
-        $metadata .= $owner->MarkupMeta('description', $owner->GenerateDescription(), true, $config->Charset());
+        if ($description = $owner->GenerateDescription()) {
+            $metadata .= $owner->MarkupMeta('description', $description, $config->Charset());
+        }
 
         // extra metadata
-        if ($config->ExtraMetaEnabled() && $owner->ExtraMeta) {
+        if ($config->ExtraMetaEnabled()) {
             $metadata .= $owner->MarkupComment('Extra Metadata');
-            $metadata .= $owner->ExtraMeta . PHP_EOL;
+            $metadata .= $owner->GenerateExtraMeta();
         }
     }
 
 
-    /* Helper Methods
+    /* Markup Methods
     ------------------------------------------------------------------------------*/
 
     /**
@@ -164,7 +163,7 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
     }
 
     /**
-     * Returns markup for a HTML meta element.
+     * Returns markup for a HTML meta element. Can be flagged for encoding.
      *
      * @var string $name
      * @var string $content
@@ -174,7 +173,11 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
      */
     public function MarkupMeta($name, $content, $encode = false)
     {
-        return '<meta name="' . $name . '" content="' . $this->encodeContent($content, $encode) . '" />' . PHP_EOL;
+        if ($encode) {
+            return '<meta name="' . $name . '" content="' . $this->encodeContent($content, $encode) . '" />' . PHP_EOL;
+        } else {
+            return '<meta name="' . $name . '" content="' . $content . '" />' . PHP_EOL;
+        }
     }
 
     /**
@@ -206,7 +209,7 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
     }
 
 
-    /* Meta Methods
+    /* Generation Methods
     ------------------------------------------------------------------------------*/
 
     /**
@@ -216,11 +219,15 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
      */
     public function GenerateTitle()
     {
-        return SiteConfig::current_site_config()->GenerateTitle($this->owner->Title);
+        if ($this->owner->MetaTitle) {
+            return $this->owner->MetaTitle;
+        } else {
+            return SiteConfig::current_site_config()->GenerateTitle($this->owner->Title);
+        }
     }
 
     /**
-     * Returns description from the page `MetaDescription`, or the first paragraph of the `Content` attribute.
+     * Generates description from the page `MetaDescription`, or the first paragraph of the `Content` attribute.
      *
      * @return string|null
      */
@@ -259,19 +266,33 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
     }
 
     /**
+     * Generates extra metadata.
+     *
+     * return string
+     */
+    public function GenerateExtraMeta()
+    {
+        if ($this->owner->ExtraMeta) {
+            return $this->owner->ExtraMeta . PHP_EOL;
+        } else {
+            return $this->owner->MarkupComment('none');
+        }
+    }
+
+
+    /* Utility Methods
+    --------------------------------------------------------------------------*/
+
+    /**
      * Returns a plain or HTML-encoded string according to the current charset & encoding settings.
      *
      * @param string $content
-     * @param bool $encode
+     * @param string $charset
      *
      * @return string
      */
-    public function encodeContent($content, $encode = true) {
-        if ($encode) {
-            return htmlentities($content, ENT_QUOTES, $this->owner->Charset);
-        } else {
-            return $content;
-        }
+    public function encodeContent($content, $charset) {
+        return htmlentities($content, ENT_QUOTES, $charset);
     }
 
 }

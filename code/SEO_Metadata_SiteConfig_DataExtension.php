@@ -263,29 +263,26 @@ class SEO_Metadata_SiteConfig_DataExtension extends DataExtension
      */
     public function GenerateTitle($pageTitle = 'Title Error')
     {
-        // variables
-        $owner = $this->owner;
-
-        // if the is a site name
-        if ($owner->Title) {
+        // if there is a site name
+        if ($this->owner->Title) {
 
             // title parts, begin with name/title
-            $titles = array($owner->Title);
+            $titles = array($this->owner->Title);
 
             // tagline
-            if ($owner->Tagline) {
-                array_push($titles, $owner->FetchTaglineSeparator());
-                array_push($titles, $owner->Tagline);
+            if ($this->owner->Tagline) {
+                array_push($titles, $this->owner->FetchTaglineSeparator());
+                array_push($titles, $this->owner->Tagline);
             }
 
             // page title
-            if ($owner->TitleOrder == 'first') {
+            if ($this->owner->TitleOrder == 'first') {
                 // add to the beginning
-                array_unshift($titles, $owner->FetchTitleSeparator());
+                array_unshift($titles, $this->owner->FetchTitleSeparator());
                 array_unshift($titles, $pageTitle);
             } else {
                 // add to the end
-                array_push($titles, $owner->FetchTitleSeparator());
+                array_push($titles, $this->owner->FetchTitleSeparator());
                 array_push($titles, $pageTitle);
             }
 

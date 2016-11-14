@@ -160,15 +160,15 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
     /**
      * Returns markup for a HTML meta element. Can be flagged for encoding.
      *
-     * @var string $name
-     * @var string $content
-     * @var bool $encode
+     * @param string $name
+     * @param string $content
+     * @param null $encode
      *
      * @return string
      */
-    public function MarkupMeta($name, $content, $encode = false)
+    public function MarkupMeta($name, $content, $encode = null)
     {
-        if ($encode) {
+        if ($encode !== null) {
             return '<meta name="' . $name . '" content="' . $this->encodeContent($content, $encode) . '" />' . PHP_EOL;
         } else {
             return '<meta name="' . $name . '" content="' . $content . '" />' . PHP_EOL;

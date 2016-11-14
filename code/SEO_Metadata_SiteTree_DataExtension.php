@@ -81,16 +81,15 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
     {
         // variables
         $config = SiteConfig::current_site_config();
-        $owner = $this->owner;
 
         // begin SEO
-        $metadata = PHP_EOL . $owner->MarkupComment('SEO');
+        $metadata = PHP_EOL . $this->owner->MarkupComment('SEO');
 
         // register extension update hook
-        $owner->extend('updateMetadata', $config, $owner, $metadata);
+        $this->owner->extend('updateMetadata', $config, $this->owner, $metadata);
 
         // end
-        $metadata .= $owner->MarkupComment('END SEO');
+        $metadata .= $this->owner->MarkupComment('END SEO');
 
         // return
         return $metadata;

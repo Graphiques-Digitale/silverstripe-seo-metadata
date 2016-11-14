@@ -37,41 +37,36 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
     {
         // Variables
         $config = SiteConfig::current_site_config();
-        $owner = $this->owner;
+
         // Remove framework default metadata group
         $fields->removeByName(array('Metadata'));
-        //// Metadata
-        $tab = 'Root.Metadata.SEO';
+
+        //// SEO metadata
+        $SEO = [];
         // Canonical
         if ($config->CanonicalEnabled()) {
-            $fields->addFieldsToTab($tab, array(
-                ReadonlyField::create('ReadonlyMetaCanonical', 'link rel="canonical"', $owner->AbsoluteLink())
-            ));
+            $SEO[] = ReadonlyField::create('ReadonlyMetaCanonical', 'link rel="canonical"', $this->owner->AbsoluteLink());
         }
         // Title
         if ($config->TitleEnabled()) {
-            $fields->addFieldsToTab($tab, array(
-                TextField::create('MetaTitle', 'meta title')
-                    ->setAttribute('placeholder', $owner->GenerateTitle())
-            ));
+            $SEO[] = TextField::create('MetaTitle', 'meta title')
+                ->setAttribute('placeholder', $this->owner->GenerateTitle());
         }
         // Description
-        $fields->addFieldsToTab($tab, array(
-            TextareaField::create('MetaDescription', 'meta description')
-                ->setAttribute('placeholder', $owner->GenerateDescriptionFromContent())
-        ));
+        $SEO[] = TextareaField::create('MetaDescription', 'meta description')
+            ->setAttribute('placeholder', $this->owner->GenerateDescriptionFromContent());
         // ExtraMeta
         if ($config->ExtraMetaEnabled()) {
-            $fields->addFieldsToTab($tab, array(
-                TextareaField::create('ExtraMeta', 'Custom Metadata')
-            ));
+            $SEO[] = TextareaField::create('ExtraMeta', 'Custom Metadata');
         }
-        //// Full Output
-        $tab = 'Root.Metadata.FullOutput';
+        // Add to fields
+        $fields->addFieldsToTab('Root.Metadata.SEO', $SEO);
+
+        //// Full output
         // monospaced, HTML SEO output
-        $fields->addFieldsToTab($tab, array(
+        $fields->addFieldsToTab('Root.Metadata.FullOutput', array(
             LiteralField::create('HeaderMetadata', '<pre class="bold">$Metadata()</pre>'),
-            LiteralField::create('LiteralMetadata', '<pre>' . nl2br(htmlentities(trim($owner->Metadata()), ENT_QUOTES)) . '</pre>')
+            LiteralField::create('LiteralMetadata', '<pre>' . nl2br(htmlentities(trim($this->owner->Metadata()), ENT_QUOTES)) . '</pre>')
         ));
     }
 
@@ -291,7 +286,8 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
      *
      * @return string
      */
-    public function encodeContent($content, $charset) {
+    public function encodeContent($content, $charset)
+    {
         return htmlentities($content, ENT_QUOTES, $charset);
     }
 

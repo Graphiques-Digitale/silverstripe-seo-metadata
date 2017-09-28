@@ -8,6 +8,15 @@
  * @version 1.0.0
  */
 
+use SilverStripe\ORM\DataExtension;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\ReadonlyField;
+use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\TextareaField;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\SiteConfig\SiteConfig;
+use SilverStripe\CMS\Model\SiteTree;
+
 /**
  * Class SEO_Metadata_SiteTree_DataExtension
  */
@@ -27,6 +36,10 @@ class SEO_Metadata_SiteTree_DataExtension extends DataExtension
         'MetaDescription' => 'Text', // redundant, but included for backwards-compatibility
         'ExtraMeta' => 'HTMLText', // redundant, but included for backwards-compatibility
     );
+
+    private static $casting = [
+        'Metadata' => 'HTMLText'
+    ];
 
 
     /* Overload Methods

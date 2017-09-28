@@ -1,4 +1,4 @@
-SiteConfig:
+SilverStripe\SiteConfig\SiteConfig:
   # Charset
   CharsetStatus: true
   Charset: 'UTF-8'

@@ -8,6 +8,13 @@
  * @version 1.0.0
  */
 
+use SilverStripe\ORM\DataExtension;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\TabSet;
+use SilverStripe\Forms\LabelField;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\TextField;
+
 /**
  * Class SEO_Metadata_SiteConfig_DataExtension
  *

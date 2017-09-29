@@ -5,14 +5,14 @@ Ater:
     - 'cms/*'
 ---
 
-SiteConfig:
+SilverStripe\SiteConfig\SiteConfig:
   extensions:
     - 'SEO_Metadata_SiteConfig_DataExtension'
 
-SiteTree:
+SilverStripe\CMS\Model\SiteTree:
   extensions:
     - 'SEO_Metadata_SiteTree_DataExtension'
 
-LeftAndMain:
+SilverStripe\Admin\LeftAndMain:
   extra_requirements_css:
     - 'silverstripe-seo-metadata/css/LeftAndMain.css'

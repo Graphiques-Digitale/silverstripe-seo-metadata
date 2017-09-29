@@ -5,8 +5,6 @@ sudo: false
 language: php
 
 php:
-  - 5.4
-  - 5.5
   - 5.6
   - 7.0
 
@@ -16,17 +14,11 @@ env:
 matrix:
   include:
     - php: 5.6
-      env: DB=MYSQL CORE_RELEASE=3
-    - php: 5.6
-      env: DB=MYSQL CORE_RELEASE=3.1
-    - php: 5.6
-      env: DB=PGSQL CORE_RELEASE=3.2
-    - php: 5.6
-      env: DB=PGSQL CORE_RELEASE=3.3
-    - php: 5.6
-      env: DB=PGSQL CORE_RELEASE=3.4
-  allow_failures:
+      env: DB=MYSQL PHPUNIT_TEST=1 PHPCS_TEST=1
     - php: 7.0
+      env: DB=PGSQL PHPUNIT_TEST=1
+    - php: 7.1.2
+      env: DB=MYSQL PDO=1 PHPUNIT_TEST=1
 
 before_script:
   - composer self-update || true
@@ -38,4 +30,4 @@ before_script:
   - composer install
 
 script:
-  - ./vendor/bin/phpunit ./silverstripe-seo-metadata/tests
+  - vendor/bin/phpunit silverstripe-seo-metadata/tests

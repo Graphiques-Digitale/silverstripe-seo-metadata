@@ -1,5 +1,7 @@
 <?php
 
+use \SilverStripe\Dev\SapphireTest;
+
 //
 class SEO_Metadata_SiteConfig_DataExtensionTest extends SapphireTest {
 
